@@ -1,2 +1,3 @@
-# VisualEffectGraph-Universal
-URP Boilerplate project for VFXGraph
+# Visual Effect Graph (Universal Render Pipeline)
+
+URP / VisualEffectGraph project with various tests. 
