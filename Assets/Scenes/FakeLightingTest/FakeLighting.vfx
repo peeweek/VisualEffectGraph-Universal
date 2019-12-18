@@ -18,10 +18,10 @@ MonoBehaviour:
   categories: []
   uiBounds:
     serializedVersion: 2
-    x: 392
+    x: 644
     y: -133
-    width: 943
-    height: 1886
+    width: 691
+    height: 1966
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -32,23 +32,91 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d4c867f6b72b714dbb5fd1780afe208, type: 3}
-  m_Name: LightProbeTest
+  m_Name: FakeLighting
   m_EditorClassIdentifier: 
   m_Parent: {fileID: 0}
   m_Children:
   - {fileID: 8926484042661614555}
   - {fileID: 8926484042661614558}
   - {fileID: 8926484042661614583}
-  - {fileID: 8926484042661614604}
-  - {fileID: 8926484042661614614}
   - {fileID: 8926484042661614673}
   - {fileID: 8926484042661614679}
   - {fileID: 8926484042661614686}
+  - {fileID: 8926484042661614738}
+  - {fileID: 8926484042661614743}
+  - {fileID: 8926484042661614745}
+  - {fileID: 8926484042661614752}
+  - {fileID: 8926484042661614759}
   m_UIPosition: {x: 0, y: 0}
   m_UICollapsed: 1
   m_UISuperCollapsed: 0
   m_UIInfos: {fileID: 114340500867371532}
-  m_ParameterInfo: []
+  m_ParameterInfo:
+  - name: LightPosition
+    path: LightPosition
+    tooltip: 
+    sheetType: m_Vector3f
+    realType: Vector3
+    defaultValue:
+      m_Type:
+        m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      m_SerializableObject: '{"x":2.0,"y":0.0,"z":0.0}'
+    min: -Infinity
+    max: Infinity
+    descendantCount: 0
+  - name: LightRadius
+    path: LightRadius
+    tooltip: 
+    sheetType: m_Float
+    realType: Single
+    defaultValue:
+      m_Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      m_SerializableObject: 3
+    min: -Infinity
+    max: Infinity
+    descendantCount: 0
+  - name: LightIntensity
+    path: LightIntensity
+    tooltip: 
+    sheetType: m_Float
+    realType: Single
+    defaultValue:
+      m_Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      m_SerializableObject: 0
+    min: -Infinity
+    max: Infinity
+    descendantCount: 0
+  - name: LightColor
+    path: LightColor
+    tooltip: 
+    sheetType: m_Vector4f
+    realType: Color
+    defaultValue:
+      m_Type:
+        m_SerializableType: UnityEngine.Color, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      m_SerializableObject: '{"r":0.0,"g":0.0,"b":0.0,"a":0.0}'
+    min: -Infinity
+    max: Infinity
+    descendantCount: 0
+  - name: Directionality
+    path: Directionality
+    tooltip: 
+    sheetType: m_Float
+    realType: Single
+    defaultValue:
+      m_Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      m_SerializableObject: 0.5
+    min: 0
+    max: 1
+    descendantCount: 0
   m_GraphVersion: 4
   m_saved: 1
   m_SubgraphDependencies:
@@ -60,7 +128,7 @@ VisualEffectResource:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: LightProbeTest
+  m_Name: FakeLighting
   m_Graph: {fileID: 114350483966674976}
   m_ShaderSources:
   - compute: 1
@@ -135,10 +203,10 @@ VisualEffectResource:
       PARTICLE_PER_STRIP_COUNT);\r\n\t\tInitStripAttributes(particleIndex, attributes,
       stripData);\r\n\t\t// TODO Change seed to be sure we're deterministic on random
       with strip\r\n#endif\r\n        \r\n        {\n            SetAttribute_E6295C0(
-      /*inout */attributes.velocity,  /*inout */attributes.seed, float3(-0.333000004,
-      0.800000012, -0.333000004), float3(0.333000004, 1, 0.333000004));\n       
+      /*inout */attributes.velocity,  /*inout */attributes.seed, float3(-0.100000001,
+      0.800000012, -0.100000001), float3(0.100000001, 1, 0.100000001));\n       
       }\n        {\n            SetAttribute_F01429A3( /*inout */attributes.lifetime, 
-      /*inout */attributes.seed, (float)2, (float)3);\n        }\n        {\n           
+      /*inout */attributes.seed, (float)4, (float)6);\n        }\n        {\n           
       SetAttribute_CA100327( /*inout */attributes.texIndex,  /*inout */attributes.seed,
       (float)0, (float)64);\n        }\n        {\n            SetAttribute_48A7BD6E(
       /*inout */attributes.angleZ,  /*inout */attributes.seed, (float)0, (float)360);\n       
@@ -146,12 +214,12 @@ VisualEffectResource:
       \r\n        {\r\n#if USE_DEAD_LIST\r\n\t        uint deadIndex = deadListIn.DecrementCounter();\r\n           
       uint index = deadListIn[deadIndex];\r\n#else\r\n            uint index = particleIndex;\r\n#endif\r\n           
       attributeBuffer.Store3((index * 0x4 + 0x0) << 2,asuint(attributes.velocity));\n           
-      attributeBuffer.Store((index * 0x1 + 0x80) << 2,asuint(attributes.lifetime));\n           
-      attributeBuffer.Store((index * 0x3 + 0xA0) << 2,asuint(attributes.texIndex));\n           
-      attributeBuffer.Store((index * 0x1 + 0x100) << 2,asuint(attributes.angleZ));\n           
-      attributeBuffer.Store((index * 0x3 + 0xA1) << 2,asuint(attributes.age));\n           
-      attributeBuffer.Store3((index * 0x4 + 0x120) << 2,asuint(attributes.position));\n           
-      attributeBuffer.Store((index * 0x3 + 0xA2) << 2,uint(attributes.alive));\n           
+      attributeBuffer.Store((index * 0x1 + 0x100) << 2,asuint(attributes.lifetime));\n           
+      attributeBuffer.Store((index * 0x3 + 0x140) << 2,asuint(attributes.texIndex));\n           
+      attributeBuffer.Store((index * 0x1 + 0x200) << 2,asuint(attributes.angleZ));\n           
+      attributeBuffer.Store((index * 0x3 + 0x141) << 2,asuint(attributes.age));\n           
+      attributeBuffer.Store3((index * 0x4 + 0x240) << 2,asuint(attributes.position));\n           
+      attributeBuffer.Store((index * 0x3 + 0x142) << 2,uint(attributes.alive));\n           
       \n\r\n        }\r\n    }\r\n}\r\n"
   - compute: 1
     name: '[System 1]Update Particle'
@@ -186,13 +254,13 @@ VisualEffectResource:
       + groupId.y * dispatchWidth * NB_THREADS_PER_GROUP;\r\n\tuint index = id;\r\n\tif
       (id < nbMax)\r\n\t{\r\n        Attributes attributes = (Attributes)0;\r\n\t\tSourceAttributes
       sourceAttributes = (SourceAttributes)0;\r\n\r\n#if VFX_USE_ALIVE_CURRENT\r\n\t\tattributes.alive
-      = (attributeBuffer.Load((index * 0x3 + 0xA2) << 2));\n\t\t\n\r\n\t\tif (attributes.alive)\r\n\t\t{\r\n\t\t\tattributes.velocity
+      = (attributeBuffer.Load((index * 0x3 + 0x142) << 2));\n\t\t\n\r\n\t\tif (attributes.alive)\r\n\t\t{\r\n\t\t\tattributes.velocity
       = asfloat(attributeBuffer.Load3((index * 0x4 + 0x0) << 2));\n\t\t\tattributes.lifetime
-      = asfloat(attributeBuffer.Load((index * 0x1 + 0x80) << 2));\n\t\t\tattributes.texIndex
-      = asfloat(attributeBuffer.Load((index * 0x3 + 0xA0) << 2));\n\t\t\tattributes.mass
+      = asfloat(attributeBuffer.Load((index * 0x1 + 0x100) << 2));\n\t\t\tattributes.texIndex
+      = asfloat(attributeBuffer.Load((index * 0x3 + 0x140) << 2));\n\t\t\tattributes.mass
       = (float)1;\n\t\t\tattributes.age = asfloat(attributeBuffer.Load((index * 0x3
-      + 0xA1) << 2));\n\t\t\tattributes.position = asfloat(attributeBuffer.Load3((index
-      * 0x4 + 0x120) << 2));\n\t\t\t\n\r\n\r\n// Initialize built-in needed attributes\r\n#if
+      + 0x141) << 2));\n\t\t\tattributes.position = asfloat(attributeBuffer.Load3((index
+      * 0x4 + 0x240) << 2));\n\t\t\t\n\r\n\r\n// Initialize built-in needed attributes\r\n#if
       VFX_USE_OLDPOSITION_CURRENT\r\n\t\t\tattributes.oldPosition = attributes.position;\r\n#endif\r\n#if
       HAS_STRIPS\r\n            const StripData stripData = GetStripDataFromParticleIndex(index,
       PARTICLE_PER_STRIP_COUNT);\r\n            InitStripAttributes(index, attributes,
@@ -204,15 +272,15 @@ VisualEffectResource:
       attributes.lifetime,  /*inout */attributes.alive);\n\t\t\t\n\r\n\r\n\t\t\tif
       (attributes.alive)\r\n\t\t\t{\r\n\t\t\t\tattributeBuffer.Store3((index * 0x4
       + 0x0) << 2,asuint(attributes.velocity));\n\t\t\t\tattributeBuffer.Store((index
-      * 0x3 + 0xA0) << 2,asuint(attributes.texIndex));\n\t\t\t\tattributeBuffer.Store((index
-      * 0x3 + 0xA1) << 2,asuint(attributes.age));\n\t\t\t\tattributeBuffer.Store3((index
-      * 0x4 + 0x120) << 2,asuint(attributes.position));\n\t\t\t\t\n\r\n#if VFX_HAS_INDIRECT_DRAW\r\n               
+      * 0x3 + 0x140) << 2,asuint(attributes.texIndex));\n\t\t\t\tattributeBuffer.Store((index
+      * 0x3 + 0x141) << 2,asuint(attributes.age));\n\t\t\t\tattributeBuffer.Store3((index
+      * 0x4 + 0x240) << 2,asuint(attributes.position));\n\t\t\t\t\n\r\n#if VFX_HAS_INDIRECT_DRAW\r\n               
       uint indirectIndex = indirectBuffer.IncrementCounter();\r\n\t\t\t\tindirectBuffer[indirectIndex]
       = index;\r\n#endif\r\n\r\n#if HAS_STRIPS\t\t\t\r\n\t\t\t\tuint relativeIndexInStrip
       = GetRelativeIndex(index, stripData);\r\n\t\t\t\tInterlockedMin(STRIP_DATA(STRIP_MIN_ALIVE,
       stripData.stripIndex), relativeIndexInStrip);\r\n\t\t\t\tInterlockedMax(STRIP_DATA(STRIP_MAX_ALIVE,
       stripData.stripIndex), relativeIndexInStrip);\r\n#endif\r\n\t\t\t}\r\n\t\t\telse\r\n\t\t\t{\r\n\t\t\t\tattributeBuffer.Store((index
-      * 0x3 + 0xA2) << 2,uint(attributes.alive));\n\t\t\t\t\n\r\n#if USE_DEAD_LIST
+      * 0x3 + 0x142) << 2,uint(attributes.alive));\n\t\t\t\t\n\r\n#if USE_DEAD_LIST
       && !VFX_USE_STRIPALIVE_CURRENT\r\n\t\t\t\tuint deadIndex = deadListOut.IncrementCounter();\r\n\t\t\t\tdeadListOut[deadIndex]
       = index;\r\n#endif\r\n\t\t\t}\r\n\t\t}\r\n#if USE_DEAD_LIST && VFX_USE_STRIPALIVE_CURRENT\r\n       
       else if (attributes.stripAlive)\r\n        {\r\n            if (STRIP_DATA_X(attachedStripDataBuffer,
@@ -221,12 +289,12 @@ VisualEffectResource:
       = index;\r\n                attributes.stripAlive = false;\r\n               
       \r\n            }            \r\n        }\r\n#endif\r\n#else\r\n\t\tattributes.velocity
       = asfloat(attributeBuffer.Load3((index * 0x4 + 0x0) << 2));\n\t\tattributes.lifetime
-      = asfloat(attributeBuffer.Load((index * 0x1 + 0x80) << 2));\n\t\tattributes.texIndex
-      = asfloat(attributeBuffer.Load((index * 0x3 + 0xA0) << 2));\n\t\tattributes.mass
+      = asfloat(attributeBuffer.Load((index * 0x1 + 0x100) << 2));\n\t\tattributes.texIndex
+      = asfloat(attributeBuffer.Load((index * 0x3 + 0x140) << 2));\n\t\tattributes.mass
       = (float)1;\n\t\tattributes.age = asfloat(attributeBuffer.Load((index * 0x3
-      + 0xA1) << 2));\n\t\tattributes.position = asfloat(attributeBuffer.Load3((index
-      * 0x4 + 0x120) << 2));\n\t\tattributes.alive = (attributeBuffer.Load((index
-      * 0x3 + 0xA2) << 2));\n\t\t\n\r\n\t\t\r\n#if VFX_USE_OLDPOSITION_CURRENT\r\n\t\tattributes.oldPosition
+      + 0x141) << 2));\n\t\tattributes.position = asfloat(attributeBuffer.Load3((index
+      * 0x4 + 0x240) << 2));\n\t\tattributes.alive = (attributeBuffer.Load((index
+      * 0x3 + 0x142) << 2));\n\t\t\n\r\n\t\t\r\n#if VFX_USE_OLDPOSITION_CURRENT\r\n\t\tattributes.oldPosition
       = attributes.position;\r\n#endif\r\n#if HAS_STRIPS\r\n        const StripData
       stripData = GetStripDataFromParticleIndex(index, PARTICLE_PER_STRIP_COUNT);\r\n       
       InitStripAttributes(index, attributes, stripData);\r\n#endif\r\n\t\t\r\n\t\t{\n\t\t   
@@ -237,15 +305,15 @@ VisualEffectResource:
       */attributes.age, deltaTime_a);\n\t\tReap(attributes.age, attributes.lifetime, 
       /*inout */attributes.alive);\n\t\t\n\r\n\t\tattributeBuffer.Store3((index *
       0x4 + 0x0) << 2,asuint(attributes.velocity));\n\t\tattributeBuffer.Store((index
-      * 0x3 + 0xA0) << 2,asuint(attributes.texIndex));\n\t\tattributeBuffer.Store((index
-      * 0x3 + 0xA1) << 2,asuint(attributes.age));\n\t\tattributeBuffer.Store3((index
-      * 0x4 + 0x120) << 2,asuint(attributes.position));\n\t\tattributeBuffer.Store((index
-      * 0x3 + 0xA2) << 2,uint(attributes.alive));\n\t\t\n\r\n#if VFX_HAS_INDIRECT_DRAW\r\n       
+      * 0x3 + 0x140) << 2,asuint(attributes.texIndex));\n\t\tattributeBuffer.Store((index
+      * 0x3 + 0x141) << 2,asuint(attributes.age));\n\t\tattributeBuffer.Store3((index
+      * 0x4 + 0x240) << 2,asuint(attributes.position));\n\t\tattributeBuffer.Store((index
+      * 0x3 + 0x142) << 2,uint(attributes.alive));\n\t\t\n\r\n#if VFX_HAS_INDIRECT_DRAW\r\n       
       uint indirectIndex = indirectBuffer.IncrementCounter();\r\n\t\tindirectBuffer[indirectIndex]
       = index;\r\n#endif\r\n#endif\r\n\t}\r\n}\r\n"
   - compute: 0
     name: '[System 1]Output Particle Octagon'
-    source: "Shader \"Hidden/VFX/LightProbeTest/System 1/Output Particle Octagon\"\n{\r\n\tSubShader\r\n\t{\t\r\n\t\tCull
+    source: "Shader \"Hidden/VFX/FakeLighting/System 1/Output Particle Octagon\"\n{\r\n\tSubShader\r\n\t{\t\r\n\t\tCull
       Off\r\n\t\t\r\n\t\tTags { \"Queue\"=\"Transparent\" \"IgnoreProjector\"=\"True\"
       \"RenderType\"=\"Transparent\" }\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\tBlend
       SrcAlpha OneMinusSrcAlpha\n\t\tZTest LEqual\n\t\tZWrite Off\n\t\tCull Off\n\t\t\n\t\n\t\t\t\n\t\tHLSLINCLUDE\n\t\t\n\t\t#define
@@ -267,15 +335,18 @@ VisualEffectResource:
       1\n\t\t#define VFX_NEEDS_POSWS_INTERPOLATOR 1\n\t\t#define VFX_PRIMITIVE_OCTAGON
       1\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t#define VFX_LOCAL_SPACE 1\n\t\t#include
       \"Packages/com.unity.visualeffectgraph/Shaders/RenderPipeline/Universal/VFXDefines.hlsl\"\n\t\t\n\n\t\tCBUFFER_START(parameters)\n\t\t   
-      float4x4 uniform_d;\n\t\t    float4 Size_b;\n\t\t    float Color_c;\n\t\t   
-      uint3 PADDING_0;\n\t\tCBUFFER_END\n\t\t\n\t\tstruct Attributes\n\t\t{\n\t\t   
-      float lifetime;\n\t\t    float texIndex;\n\t\t    float angleZ;\n\t\t    float
-      age;\n\t\t    float3 position;\n\t\t    float3 color;\n\t\t    float alpha;\n\t\t   
-      bool alive;\n\t\t    float3 axisX;\n\t\t    float3 axisY;\n\t\t    float3 axisZ;\n\t\t   
-      float angleX;\n\t\t    float angleY;\n\t\t    float pivotX;\n\t\t    float
-      pivotY;\n\t\t    float pivotZ;\n\t\t    float size;\n\t\t    float scaleX;\n\t\t   
-      float scaleY;\n\t\t    float scaleZ;\n\t\t};\n\t\t\n\t\tstruct SourceAttributes\n\t\t{\n\t\t};\n\t\t\n\t\tTexture2D
-      MainTexture;\n\t\tSamplerState samplerMainTexture;\n\t\tfloat4 MainTexture_TexelSize;\n\t\t\n\n\t\t\n\t\t#define
+      float4 Size_b;\n\t\t    float3 LightPosition;\n\t\t    float Color_c;\n\t\t   
+      float3 LightColor;\n\t\t    float LightRadius;\n\t\t    float LightIntensity;\n\t\t   
+      float Directionality;\n\t\t    uint2 PADDING_0;\n\t\tCBUFFER_END\n\t\t\n\t\tstruct
+      Attributes\n\t\t{\n\t\t    float lifetime;\n\t\t    float texIndex;\n\t\t   
+      float angleZ;\n\t\t    float age;\n\t\t    float3 position;\n\t\t    float3
+      color;\n\t\t    float alpha;\n\t\t    bool alive;\n\t\t    float3 axisX;\n\t\t   
+      float3 axisY;\n\t\t    float3 axisZ;\n\t\t    float angleX;\n\t\t    float
+      angleY;\n\t\t    float pivotX;\n\t\t    float pivotY;\n\t\t    float pivotZ;\n\t\t   
+      float size;\n\t\t    float scaleX;\n\t\t    float scaleY;\n\t\t    float scaleZ;\n\t\t};\n\t\t\n\t\tstruct
+      SourceAttributes\n\t\t{\n\t\t};\n\t\t\n\t\tTexture2D MainTexture;\n\t\tSamplerState
+      samplerMainTexture;\n\t\tfloat4 MainTexture_TexelSize;\n\t\tTexture2D NormalMap;\n\t\tSamplerState
+      samplerNormalMap;\n\t\tfloat4 NormalMap_TexelSize;\n\t\t\n\n\t\t\n\t\t#define
       VFX_NEEDS_COLOR_INTERPOLATOR (VFX_USE_COLOR_CURRENT || VFX_USE_ALPHA_CURRENT)\n\t\t#if
       HAS_STRIPS\n\t\t#define VFX_OPTIONAL_INTERPOLATION \n\t\t#else\n\t\t#define
       VFX_OPTIONAL_INTERPOLATION nointerpolation\n\t\t#endif\n\t\t\n\t\tByteAddressBuffer
@@ -302,13 +373,11 @@ VisualEffectResource:
       VFX_PASSDEPTH == VFX_PASSDEPTH_MOTION_VECTOR\n\t\t\t\tfloat4 cPosPrevious :
       TEXCOORD3;\n\t\t\t\tfloat4 cPosNonJiterred : TEXCOORD4;\n\t\t\t\t#endif\n\t\t\t   
       \n\t\t\t    #if VFX_NEEDS_POSWS_INTERPOLATOR\n\t\t\t    float3 posWS : TEXCOORD5;\n\t\t\t   
-      #endif\n\t\t\t    VFX_OPTIONAL_INTERPOLATION float3 GISamplePosition : NORMAL0;\n\t\t\t   
-      VFX_OPTIONAL_INTERPOLATION float BentNormal : NORMAL1;\n\t\t\t    VFX_OPTIONAL_INTERPOLATION
-      bool UseMainTextureColor : NORMAL2;\n\t\t\t    VFX_OPTIONAL_INTERPOLATION float2
-      FlipbookSize : NORMAL3;\n\t\t\t    VFX_OPTIONAL_INTERPOLATION float4 VFX_ColorAndAlpha
-      : NORMAL4;\n\t\t\t    VFX_OPTIONAL_INTERPOLATION float VFX_texIndex : NORMAL5;\n\t\t\t   
-      VFX_OPTIONAL_INTERPOLATION float SoftParticleDistance : NORMAL6;\n\t\t\t   
-      \n\n\t\t\t\t\n\t\t\t\tUNITY_VERTEX_OUTPUT_STEREO\n\t\t\t};\n\t\t\t\n\t\t\t#define
+      #endif\n\t\t\t    VFX_OPTIONAL_INTERPOLATION bool UseMainTextureColor : NORMAL0;\n\t\t\t   
+      VFX_OPTIONAL_INTERPOLATION float2 FlipbookSize : NORMAL1;\n\t\t\t    VFX_OPTIONAL_INTERPOLATION
+      float SoftParticleDistance : NORMAL2;\n\t\t\t    VFX_OPTIONAL_INTERPOLATION
+      float4 VFX_ColorAndAlpha : NORMAL3;\n\t\t\t    VFX_OPTIONAL_INTERPOLATION float
+      VFX_texIndex : NORMAL4;\n\t\t\t    \n\n\t\t\t\t\n\t\t\t\tUNITY_VERTEX_OUTPUT_STEREO\n\t\t\t};\n\t\t\t\n\t\t\t#define
       VFX_VARYING_PS_INPUTS ps_input\n\t\t\t#define VFX_VARYING_POSCS pos\n\t\t\t#define
       VFX_VARYING_ALPHA builtInInterpolants.z\n\t\t\t#define VFX_VARYING_ALPHATHRESHOLD
       builtInInterpolants.x\n\t\t\t#define VFX_VARYING_FRAMEBLEND builtInInterpolants.y\n\t\t\t#define
@@ -341,7 +410,7 @@ VisualEffectResource:
       must be defined when HAS_STRIPS is.\n\t\t\t#endif\n\t\t\t\n\t\t\tstruct vs_input\n\t\t\t{\n\t\t\t\tVFX_DECLARE_INSTANCE_ID\n\t\t\t};\n\t\t\t\n\t\t\t#if
       HAS_STRIPS\n\t\t\t#define PARTICLE_IN_EDGE (id & 1)\n\t\t\t\n\t\t\tfloat3 GetParticlePosition(uint
       index)\n\t\t\t{\n\t\t\t\tstruct Attributes attributes = (Attributes)0;\n\t\t\t\tattributes.position
-      = asfloat(attributeBuffer.Load3((index * 0x4 + 0x120) << 2));\n\t\t\t\t\n\n\t\t\t\treturn
+      = asfloat(attributeBuffer.Load3((index * 0x4 + 0x240) << 2));\n\t\t\t\t\n\n\t\t\t\treturn
       attributes.position;\n\t\t\t}\n\t\t\t\n\t\t\tfloat3 GetStripTangent(float3
       currentPos, uint relativeIndex, const StripData stripData)\n\t\t\t{\n\t\t\t\tfloat3
       prevTangent = (float3)0.0f;\n\t\t\t\tif (relativeIndex > 0)\n\t\t\t\t{\n\t\t\t\t\tuint
@@ -371,26 +440,26 @@ VisualEffectResource:
       attributes = (Attributes)0;\n\t\t\t\t\t\tSourceAttributes sourceAttributes
       = (SourceAttributes)0;\n\t\t\t\t\t\t\n\t\t\t\t\t\t#if VFX_HAS_INDIRECT_DRAW\n\t\t\t\t\t\tindex
       = indirectBuffer[index];\n\t\t\t\t\t\tattributes.lifetime = asfloat(attributeBuffer.Load((index
-      * 0x1 + 0x80) << 2));\n\t\t\t\t\t\tattributes.texIndex = asfloat(attributeBuffer.Load((index
-      * 0x3 + 0xA0) << 2));\n\t\t\t\t\t\tattributes.angleZ = asfloat(attributeBuffer.Load((index
-      * 0x1 + 0x100) << 2));\n\t\t\t\t\t\tattributes.age = asfloat(attributeBuffer.Load((index
-      * 0x3 + 0xA1) << 2));\n\t\t\t\t\t\tattributes.position = asfloat(attributeBuffer.Load3((index
-      * 0x4 + 0x120) << 2));\n\t\t\t\t\t\tattributes.color = float3(1, 1, 1);\n\t\t\t\t\t\tattributes.alpha
+      * 0x1 + 0x100) << 2));\n\t\t\t\t\t\tattributes.texIndex = asfloat(attributeBuffer.Load((index
+      * 0x3 + 0x140) << 2));\n\t\t\t\t\t\tattributes.angleZ = asfloat(attributeBuffer.Load((index
+      * 0x1 + 0x200) << 2));\n\t\t\t\t\t\tattributes.age = asfloat(attributeBuffer.Load((index
+      * 0x3 + 0x141) << 2));\n\t\t\t\t\t\tattributes.position = asfloat(attributeBuffer.Load3((index
+      * 0x4 + 0x240) << 2));\n\t\t\t\t\t\tattributes.color = float3(1, 1, 1);\n\t\t\t\t\t\tattributes.alpha
       = (float)1;\n\t\t\t\t\t\tattributes.alive = (attributeBuffer.Load((index *
-      0x3 + 0xA2) << 2));\n\t\t\t\t\t\tattributes.axisX = float3(1, 0, 0);\n\t\t\t\t\t\tattributes.axisY
+      0x3 + 0x142) << 2));\n\t\t\t\t\t\tattributes.axisX = float3(1, 0, 0);\n\t\t\t\t\t\tattributes.axisY
       = float3(0, 1, 0);\n\t\t\t\t\t\tattributes.axisZ = float3(0, 0, 1);\n\t\t\t\t\t\tattributes.angleX
       = (float)0;\n\t\t\t\t\t\tattributes.angleY = (float)0;\n\t\t\t\t\t\tattributes.pivotX
       = (float)0;\n\t\t\t\t\t\tattributes.pivotY = (float)0;\n\t\t\t\t\t\tattributes.pivotZ
       = (float)0;\n\t\t\t\t\t\tattributes.size = (float)0.100000001;\n\t\t\t\t\t\tattributes.scaleX
       = (float)1;\n\t\t\t\t\t\tattributes.scaleY = (float)1;\n\t\t\t\t\t\tattributes.scaleZ
       = (float)1;\n\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t#else\n\t\t\t\t\t\tattributes.alive
-      = (attributeBuffer.Load((index * 0x3 + 0xA2) << 2));\n\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t#if
+      = (attributeBuffer.Load((index * 0x3 + 0x142) << 2));\n\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t#if
       !HAS_STRIPS\n\t\t\t\t\t\tif (!attributes.alive)\n\t\t\t\t\t\t\treturn o;\n\t\t\t\t\t\t#endif\n\t\t\t\t\t\t\t\n\t\t\t\t\t\tattributes.lifetime
-      = asfloat(attributeBuffer.Load((index * 0x1 + 0x80) << 2));\n\t\t\t\t\t\tattributes.texIndex
-      = asfloat(attributeBuffer.Load((index * 0x3 + 0xA0) << 2));\n\t\t\t\t\t\tattributes.angleZ
-      = asfloat(attributeBuffer.Load((index * 0x1 + 0x100) << 2));\n\t\t\t\t\t\tattributes.age
-      = asfloat(attributeBuffer.Load((index * 0x3 + 0xA1) << 2));\n\t\t\t\t\t\tattributes.position
-      = asfloat(attributeBuffer.Load3((index * 0x4 + 0x120) << 2));\n\t\t\t\t\t\tattributes.color
+      = asfloat(attributeBuffer.Load((index * 0x1 + 0x100) << 2));\n\t\t\t\t\t\tattributes.texIndex
+      = asfloat(attributeBuffer.Load((index * 0x3 + 0x140) << 2));\n\t\t\t\t\t\tattributes.angleZ
+      = asfloat(attributeBuffer.Load((index * 0x1 + 0x200) << 2));\n\t\t\t\t\t\tattributes.age
+      = asfloat(attributeBuffer.Load((index * 0x3 + 0x141) << 2));\n\t\t\t\t\t\tattributes.position
+      = asfloat(attributeBuffer.Load3((index * 0x4 + 0x240) << 2));\n\t\t\t\t\t\tattributes.color
       = float3(1, 1, 1);\n\t\t\t\t\t\tattributes.alpha = (float)1;\n\t\t\t\t\t\tattributes.axisX
       = float3(1, 0, 0);\n\t\t\t\t\t\tattributes.axisY = float3(0, 1, 0);\n\t\t\t\t\t\tattributes.axisZ
       = float3(0, 0, 1);\n\t\t\t\t\t\tattributes.angleX = (float)0;\n\t\t\t\t\t\tattributes.angleY
@@ -482,24 +551,19 @@ VisualEffectResource:
       && defined (VFX_VARYING_FRAMEBLEND)\n\t\t\t\t\t\to.VFX_VARYING_UV.zw = uvData.uvs.zw;\n\t\t\t\t\t\to.VFX_VARYING_FRAMEBLEND
       = uvData.blend;\n\t\t\t\t\t\t#if USE_FLIPBOOK_MOTIONVECTORS && defined(VFX_VARYING_MOTIONVECTORSCALE)\n\t\t\t\t\t\t\n\t\t\t\t\t\to.VFX_VARYING_MOTIONVECTORSCALE
       = motionVectorScale * invFlipBookSize;\n\t\t\t\t\t\t#endif\n\t\t\t\t\t\t#endif\n\t\t\t\t\t\t#endif\n\t\t\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t   
-      \n\t\t\t    float3 GISamplePosition__ = (float3)0;{\n\t\t\t        float3 tmp_bb
-      = mul(uniform_d, float4(attributes.position, 1.0)).xyz;\n\t\t\t        \n\t\t\t       
-      GISamplePosition__ = tmp_bb;\n\t\t\t    }\n\t\t\t    o.GISamplePosition = GISamplePosition__;float
-      BentNormal__ = (float)0;{\n\t\t\t        \n\t\t\t        BentNormal__ = (float)0.845161319;\n\t\t\t   
-      }\n\t\t\t    o.BentNormal = BentNormal__;bool UseMainTextureColor__ = (bool)0;{\n\t\t\t       
-      \n\t\t\t        UseMainTextureColor__ = (bool)false;\n\t\t\t    }\n\t\t\t   
-      o.UseMainTextureColor = UseMainTextureColor__;float2 FlipbookSize__ = (float2)0;{\n\t\t\t       
+      \n\t\t\t    bool UseMainTextureColor__ = (bool)0;{\n\t\t\t        \n\t\t\t       
+      UseMainTextureColor__ = (bool)false;\n\t\t\t    }\n\t\t\t    o.UseMainTextureColor
+      = UseMainTextureColor__;float2 FlipbookSize__ = (float2)0;{\n\t\t\t       
       \n\t\t\t        FlipbookSize__ = float2(8, 8);\n\t\t\t    }\n\t\t\t    o.FlipbookSize
-      = FlipbookSize__;float4 VFX_ColorAndAlpha__ = (float4)0;{\n\t\t\t        float
-      tmp_bb = attributes.color[0];\n\t\t\t        float tmp_bc = attributes.color[1];\n\t\t\t       
-      float tmp_bd = attributes.color[2];\n\t\t\t        float4 tmp_be = float4(tmp_bb,
-      tmp_bc, tmp_bd, attributes.alpha);\n\t\t\t        \n\t\t\t        VFX_ColorAndAlpha__
-      = tmp_be;\n\t\t\t    }\n\t\t\t    o.VFX_ColorAndAlpha = VFX_ColorAndAlpha__;float
+      = FlipbookSize__;float SoftParticleDistance__ = (float)0;{\n\t\t\t        \n\t\t\t       
+      SoftParticleDistance__ = (float)1;\n\t\t\t    }\n\t\t\t    o.SoftParticleDistance
+      = SoftParticleDistance__;float4 VFX_ColorAndAlpha__ = (float4)0;{\n\t\t\t       
+      float tmp_bg = attributes.color[0];\n\t\t\t        float tmp_bh = attributes.color[1];\n\t\t\t       
+      float tmp_bi = attributes.color[2];\n\t\t\t        float4 tmp_bj = float4(tmp_bg,
+      tmp_bh, tmp_bi, attributes.alpha);\n\t\t\t        \n\t\t\t        VFX_ColorAndAlpha__
+      = tmp_bj;\n\t\t\t    }\n\t\t\t    o.VFX_ColorAndAlpha = VFX_ColorAndAlpha__;float
       VFX_texIndex__ = (float)0;{\n\t\t\t        VFX_texIndex__ = attributes.texIndex;\n\t\t\t   
-      }\n\t\t\t    o.VFX_texIndex = VFX_texIndex__;float SoftParticleDistance__ =
-      (float)0;{\n\t\t\t        \n\t\t\t        SoftParticleDistance__ = (float)1;\n\t\t\t   
-      }\n\t\t\t    o.SoftParticleDistance = SoftParticleDistance__;\n\n\t\t\t\n\t\t\t\treturn
-      o;\n\t\t\t}\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t#include
+      }\n\t\t\t    o.VFX_texIndex = VFX_texIndex__;\n\n\t\t\t\n\t\t\t\treturn o;\n\t\t\t}\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t#include
       \"Packages/com.unity.visualeffectgraph/Shaders/VFXCommonOutput.hlsl\"\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t#if
       VFX_PASSDEPTH == VFX_PASSDEPTH_SELECTION\n\t\t\tint _ObjectId;\n\t\t\tint _PassValue;\n\t\t\t#endif\n\t\t\t\n\t\t\t#define
       REQUIRE_DEPTH_TEXTURE\n\t\t\t\n\t\t\t\t\t#include \"Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl\"\n\t\t\t\t\t#include
@@ -564,8 +628,12 @@ VisualEffectResource:
       float _SampleTexture2D_CAA38CD7_B_6 = _SampleTexture2D_CAA38CD7_RGBA_0.b;\n\t\t\t   
       float _SampleTexture2D_CAA38CD7_A_7 = _SampleTexture2D_CAA38CD7_RGBA_0.a;\n\t\t\t   
       Value_1 = _SampleTexture2D_CAA38CD7_RGBA_0;\n\t\t\t}\n\t\t\t\n\t\t\t// Node:
-      SoftParticle\n\t\t\tvoid Unity_SceneDepth_Eye_float(float4 UV, out float Out)\n\t\t\t{\n\t\t\t   
-      Out = LinearEyeDepth(SHADERGRAPH_SAMPLE_SCENE_DEPTH(UV.xy), _ZBufferParams);\n\t\t\t}\n\t\t\t\n\t\t\t//
+      Divide, SoftParticle\n\t\t\tvoid Unity_Divide_float(float A, float B, out float
+      Out)\n\t\t\t{\n\t\t\t    Out = A / B;\n\t\t\t}\n\t\t\t\n\t\t\t// Node: Saturate,
+      SoftParticle\n\t\t\tvoid Unity_Saturate_float(float In, out float Out)\n\t\t\t{\n\t\t\t   
+      Out = saturate(In);\n\t\t\t}\n\t\t\t\n\t\t\t// Node: SoftParticle\n\t\t\tvoid
+      Unity_SceneDepth_Eye_float(float4 UV, out float Out)\n\t\t\t{\n\t\t\t    Out
+      = LinearEyeDepth(SHADERGRAPH_SAMPLE_SCENE_DEPTH(UV.xy), _ZBufferParams);\n\t\t\t}\n\t\t\t\n\t\t\t//
       Node: SoftParticle\n\t\t\tstruct Bindings_PixelDepth_a4fd51fa728c5ac4692b174c7430f87b\n\t\t\t{\n\t\t\t   
       float4 ScreenPosition;\n\t\t\t};\n\t\t\t\n\t\t\tvoid SG_PixelDepth_a4fd51fa728c5ac4692b174c7430f87b(Bindings_PixelDepth_a4fd51fa728c5ac4692b174c7430f87b
       IN, out float depth_1)\n\t\t\t{\n\t\t\t    float4 _ScreenPosition_4A338A69_Out_0
@@ -575,11 +643,8 @@ VisualEffectResource:
       = _ScreenPosition_4A338A69_Out_0[3];\n\t\t\t    depth_1 = _Split_E29E317D_A_4;\n\t\t\t}\n\t\t\t\n\t\t\t//
       Node: SoftParticle\n\t\t\tvoid Unity_Maximum_float(float A, float B, out float
       Out)\n\t\t\t{\n\t\t\t    Out = max(A, B);\n\t\t\t}\n\t\t\t\n\t\t\t// Node:
-      SoftParticle\n\t\t\tvoid Unity_Divide_float(float A, float B, out float Out)\n\t\t\t{\n\t\t\t   
-      Out = A / B;\n\t\t\t}\n\t\t\t\n\t\t\t// Node: SoftParticle\n\t\t\tvoid Unity_Smoothstep_float(float
-      Edge1, float Edge2, float In, out float Out)\n\t\t\t{\n\t\t\t    Out = smoothstep(Edge1,
-      Edge2, In);\n\t\t\t}\n\t\t\t\n\t\t\t// Node: SoftParticle\n\t\t\tvoid Unity_Saturate_float(float
-      In, out float Out)\n\t\t\t{\n\t\t\t    Out = saturate(In);\n\t\t\t}\n\t\t\t\n\t\t\t//
+      SoftParticle\n\t\t\tvoid Unity_Smoothstep_float(float Edge1, float Edge2, float
+      In, out float Out)\n\t\t\t{\n\t\t\t    Out = smoothstep(Edge1, Edge2, In);\n\t\t\t}\n\t\t\t\n\t\t\t//
       Node: SoftParticle\n\t\t\tstruct Bindings_SoftParticle_30b7e1d9500bb7e4c8d0ae6c56a9e9a1\n\t\t\t{\n\t\t\t   
       float4 ScreenPosition;\n\t\t\t};\n\t\t\t\n\t\t\tvoid SG_SoftParticle_30b7e1d9500bb7e4c8d0ae6c56a9e9a1(float
       Vector1_1E6191B, Bindings_SoftParticle_30b7e1d9500bb7e4c8d0ae6c56a9e9a1 IN,
@@ -597,16 +662,16 @@ VisualEffectResource:
       float _Smoothstep_254B27B2_Out_3;\n\t\t\t    Unity_Smoothstep_float(0, 1, _Divide_A3A47144_Out_2,
       _Smoothstep_254B27B2_Out_3);\n\t\t\t    float _Saturate_3A4F4D3C_Out_1;\n\t\t\t   
       Unity_Saturate_float(_Smoothstep_254B27B2_Out_3, _Saturate_3A4F4D3C_Out_1);\n\t\t\t   
-      Opacity_1 = _Saturate_3A4F4D3C_Out_1;\n\t\t\t}\n\t\t\t\n\t\t\tstruct SG_Input_4e2520bf956c0c14d98648a49ca22bf3\n\t\t\t{\n\t\t\t   
+      Opacity_1 = _Saturate_3A4F4D3C_Out_1;\n\t\t\t}\n\t\t\t\n\t\t\tstruct SG_Input_f9a154a7d8c03bb4fabd47afca2e760f\n\t\t\t{\n\t\t\t   
       float4 ScreenPosition;\n\t\t\t    half4 uv0;\n\t\t\t};\n\t\t\t\n\t\t\tstruct
-      SG_Output_4e2520bf956c0c14d98648a49ca22bf3\n\t\t\t{\n\t\t\t    float Alpha_4;\n\t\t\t};\n\t\t\t\n\t\t\tSG_Output_4e2520bf956c0c14d98648a49ca22bf3
-      SG_Evaluate_4e2520bf956c0c14d98648a49ca22bf3(\n\t\t\t    SG_Input_4e2520bf956c0c14d98648a49ca22bf3
+      SG_Output_f9a154a7d8c03bb4fabd47afca2e760f\n\t\t\t{\n\t\t\t    float Alpha_4;\n\t\t\t};\n\t\t\t\n\t\t\tSG_Output_f9a154a7d8c03bb4fabd47afca2e760f
+      SG_Evaluate_f9a154a7d8c03bb4fabd47afca2e760f(\n\t\t\t    SG_Input_f9a154a7d8c03bb4fabd47afca2e760f
       IN,\n\t\t\t    /* Property: MainTexture */ TEXTURE2D_PARAM(MainTexture, samplerMainTexture),
       float4 MainTexture_TexelSize,\n\t\t\t    /* Property: FlipbookSize */ float2
-      FlipbookSize,\n\t\t\t    /* Property: VFX_ColorAndAlpha */ float4 VFX_ColorAndAlpha,\n\t\t\t   
-      /* Property: VFX_texIndex */ float VFX_texIndex,\n\t\t\t    /* Property: SoftParticleDistance
-      */ float SoftParticleDistance)\n\t\t\t{\n\t\t\t    // Node: UV\n\t\t\t    float4
-      _UV_D00428C_Out_0 = IN.uv0;\n\t\t\t\n\t\t\t    // Node: Property\n\t\t\t   
+      FlipbookSize,\n\t\t\t    /* Property: SoftParticleDistance */ float SoftParticleDistance,\n\t\t\t   
+      /* Property: VFX_ColorAndAlpha */ float4 VFX_ColorAndAlpha,\n\t\t\t    /* Property:
+      VFX_texIndex */ float VFX_texIndex)\n\t\t\t{\n\t\t\t    // Node: UV\n\t\t\t   
+      float4 _UV_D00428C_Out_0 = IN.uv0;\n\t\t\t\n\t\t\t    // Node: Property\n\t\t\t   
       float2 _Property_5856A640_Out_0 = FlipbookSize;\n\t\t\t\n\t\t\t    // Node:
       Property\n\t\t\t    float _Property_6E46F982_Out_0 = VFX_texIndex;\n\t\t\t\n\t\t\t   
       // Node: Sample Flipbook\n\t\t\t    Bindings_SampleFlipbook_3dfb0d3601745784da8bb664d435f2e7
@@ -632,26 +697,26 @@ VisualEffectResource:
       _SoftParticle_63F41AE2, _SoftParticle_63F41AE2_Opacity_1);\n\t\t\t\n\t\t\t   
       // Node: Multiply\n\t\t\t    float _Multiply_63CA015_Out_2;\n\t\t\t    Unity_Multiply_float(_Multiply_F76A5928_Out_2,
       _SoftParticle_63F41AE2_Opacity_1, _Multiply_63CA015_Out_2);\n\t\t\t\n\t\t\t   
-      // Visual Effect Master\n\t\t\t    SG_Output_4e2520bf956c0c14d98648a49ca22bf3
+      // Visual Effect Master\n\t\t\t    SG_Output_f9a154a7d8c03bb4fabd47afca2e760f
       OUT;\n\t\t\t    OUT.Alpha_4 = _Multiply_63CA015_Out_2;\n\t\t\t    return OUT;\n\t\t\t}\n\t\t\t\n\n\t\t\t\n\t\t\t#pragma
       fragment frag\n\t\t\tfloat4 frag(ps_input i) : SV_TARGET\n\t\t\t{\n\t\t\t\tUNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);\n\t\t\t\tVFXTransformPSInputs(i);\n\t\t\t   
-      #ifdef VFX_SHADERGRAPH\n\t\t\t        float3 GISamplePosition = i.GISamplePosition;float
-      BentNormal = i.BentNormal;bool UseMainTextureColor = i.UseMainTextureColor;float2
-      FlipbookSize = i.FlipbookSize;float4 VFX_ColorAndAlpha = i.VFX_ColorAndAlpha;float
-      VFX_texIndex = i.VFX_texIndex;float SoftParticleDistance = i.SoftParticleDistance;\n\t\t\t       
-      \n\t\t\t        //Call Shader Graph\n\t\t\t        SG_Input_4e2520bf956c0c14d98648a49ca22bf3
-      INSG = (SG_Input_4e2520bf956c0c14d98648a49ca22bf3)0;\n\t\t\t        float3
+      #ifdef VFX_SHADERGRAPH\n\t\t\t        bool UseMainTextureColor = i.UseMainTextureColor;float2
+      FlipbookSize = i.FlipbookSize;float SoftParticleDistance = i.SoftParticleDistance;float4
+      VFX_ColorAndAlpha = i.VFX_ColorAndAlpha;float VFX_texIndex = i.VFX_texIndex;\n\t\t\t       
+      \n\t\t\t        //Call Shader Graph\n\t\t\t        SG_Input_f9a154a7d8c03bb4fabd47afca2e760f
+      INSG = (SG_Input_f9a154a7d8c03bb4fabd47afca2e760f)0;\n\t\t\t        float3
       posRelativeWS = VFXGetPositionRWS(i.VFX_VARYING_POSWS);\n\t\t\t        float3
       posAbsoluteWS = VFXGetPositionAWS(i.VFX_VARYING_POSWS);\n\t\t\t        INSG.ScreenPosition
       = ComputeScreenPos(VFXTransformPositionWorldToClip(i.VFX_VARYING_POSWS), _ProjectionParams.x);\n\t\t\t       
-      INSG.uv0.xy = i.uv;\n\t\t\t        \n\t\t\t        SG_Output_4e2520bf956c0c14d98648a49ca22bf3
-      OUTSG = SG_Evaluate_4e2520bf956c0c14d98648a49ca22bf3(INSG,MainTexture, samplerMainTexture,
-      MainTexture_TexelSize, FlipbookSize, VFX_ColorAndAlpha, VFX_texIndex, SoftParticleDistance);\n\t\t\t       
-      \n\n\t\t\t        \n\t\t\t        float alpha = OUTSG.Alpha_4;\n\t\t\t    #else\n\t\t\t       
-      float alpha = VFXGetFragmentColor(i).a;\n\t\t\t        alpha *= VFXGetTextureColor(VFX_SAMPLER(mainTexture),i).a;\n\t\t\t   
-      #endif\n\t\t\t\tVFXClipFragmentColor(alpha,i);\n\t\t\t\t\n\t\t\t\t#if VFX_PASSDEPTH
-      == VFX_PASSDEPTH_MOTION_VECTOR\n\t\t\t\t\t\n\t\t\t\t\t\t\tfloat2 velocity =
-      (i.VFX_VARYING_VELOCITY_CPOS.xy/i.VFX_VARYING_VELOCITY_CPOS.w) - (i.VFX_VARYING_VELOCITY_CPOS_PREVIOUS.xy/i.VFX_VARYING_VELOCITY_CPOS_PREVIOUS.w);\n\t\t\t\t\t\t\t#if
+      INSG.uv0.xy = i.uv;\n\t\t\t        \n\t\t\t        SG_Output_f9a154a7d8c03bb4fabd47afca2e760f
+      OUTSG = SG_Evaluate_f9a154a7d8c03bb4fabd47afca2e760f(INSG,MainTexture, samplerMainTexture,
+      MainTexture_TexelSize, FlipbookSize, SoftParticleDistance, VFX_ColorAndAlpha,
+      VFX_texIndex);\n\t\t\t        \n\n\t\t\t        \n\t\t\t        float alpha
+      = OUTSG.Alpha_4;\n\t\t\t    #else\n\t\t\t        float alpha = VFXGetFragmentColor(i).a;\n\t\t\t       
+      alpha *= VFXGetTextureColor(VFX_SAMPLER(mainTexture),i).a;\n\t\t\t    #endif\n\t\t\t\tVFXClipFragmentColor(alpha,i);\n\t\t\t\t\n\t\t\t\t#if
+      VFX_PASSDEPTH == VFX_PASSDEPTH_MOTION_VECTOR\n\t\t\t\t\t\n\t\t\t\t\t\t\tfloat2
+      velocity = (i.VFX_VARYING_VELOCITY_CPOS.xy/i.VFX_VARYING_VELOCITY_CPOS.w) -
+      (i.VFX_VARYING_VELOCITY_CPOS_PREVIOUS.xy/i.VFX_VARYING_VELOCITY_CPOS_PREVIOUS.w);\n\t\t\t\t\t\t\t#if
       UNITY_UV_STARTS_AT_TOP\n\t\t\t\t\t\t\t\tvelocity.y = -velocity.y;\n\t\t\t\t\t\t\t#endif\n\t\t\t\t\t\t\tfloat4
       encodedMotionVector = 0.0f;\n\t\t\t\t\t\t\tVFXEncodeMotionVector(velocity *
       0.5f, encodedMotionVector);\n\t\t\t\t\t\t\t\n\t\t\t\t\treturn encodedMotionVector;\n\t\t\t\t#elif
@@ -674,13 +739,11 @@ VisualEffectResource:
       cPosPrevious : TEXCOORD4;\n\t\t\t\tfloat4 cPosNonJiterred : TEXCOORD5;\n\t\t\t\t#endif\n\t\t\t\t\n\t\t\t\t#if
       SHADERGRAPH_NEEDS_NORMAL_FORWARD\n\t\t\t\tfloat3 normal : TEXCOORD6;\n\t\t\t\t#endif\n\t\t\t\t#if
       SHADERGRAPH_NEEDS_TANGENT_FORWARD\n\t\t\t\tfloat3 tangent : TEXCOORD7;\n\t\t\t\t#endif\n\t\t\t\t\n\t\t       
-      VFX_OPTIONAL_INTERPOLATION float3 GISamplePosition : NORMAL0;\n\t\t       
-      VFX_OPTIONAL_INTERPOLATION float BentNormal : NORMAL1;\n\t\t        VFX_OPTIONAL_INTERPOLATION
-      bool UseMainTextureColor : NORMAL2;\n\t\t        VFX_OPTIONAL_INTERPOLATION
-      float2 FlipbookSize : NORMAL3;\n\t\t        VFX_OPTIONAL_INTERPOLATION float4
-      VFX_ColorAndAlpha : NORMAL4;\n\t\t        VFX_OPTIONAL_INTERPOLATION float
-      VFX_texIndex : NORMAL5;\n\t\t        VFX_OPTIONAL_INTERPOLATION float SoftParticleDistance
-      : NORMAL6;\n\t\t        \n\n\t\t\t\t\n\t\t\t\tUNITY_VERTEX_OUTPUT_STEREO\n\t\t\t};\n\t\t\t\n\t\t\tstruct
+      VFX_OPTIONAL_INTERPOLATION bool UseMainTextureColor : NORMAL0;\n\t\t       
+      VFX_OPTIONAL_INTERPOLATION float2 FlipbookSize : NORMAL1;\n\t\t        VFX_OPTIONAL_INTERPOLATION
+      float SoftParticleDistance : NORMAL2;\n\t\t        VFX_OPTIONAL_INTERPOLATION
+      float4 VFX_ColorAndAlpha : NORMAL3;\n\t\t        VFX_OPTIONAL_INTERPOLATION
+      float VFX_texIndex : NORMAL4;\n\t\t        \n\n\t\t\t\t\n\t\t\t\tUNITY_VERTEX_OUTPUT_STEREO\n\t\t\t};\n\t\t\t\n\t\t\tstruct
       ps_output\n\t\t\t{\n\t\t\t\tfloat4 color : SV_Target0;\n\t\t#if WRITE_MOTION_VECTOR_IN_FORWARD\n\t\t\t\tfloat4
       outMotionVector : SV_Target1;\n\t\t#endif\n\t\t\t};\n\t\t\n\t\t#define VFX_VARYING_PS_INPUTS
       ps_input\n\t\t#define VFX_VARYING_POSCS pos\n\t\t#define VFX_VARYING_COLOR
@@ -717,7 +780,7 @@ VisualEffectResource:
       must be defined when HAS_STRIPS is.\n\t\t\t#endif\n\t\t\t\n\t\t\tstruct vs_input\n\t\t\t{\n\t\t\t\tVFX_DECLARE_INSTANCE_ID\n\t\t\t};\n\t\t\t\n\t\t\t#if
       HAS_STRIPS\n\t\t\t#define PARTICLE_IN_EDGE (id & 1)\n\t\t\t\n\t\t\tfloat3 GetParticlePosition(uint
       index)\n\t\t\t{\n\t\t\t\tstruct Attributes attributes = (Attributes)0;\n\t\t\t\tattributes.position
-      = asfloat(attributeBuffer.Load3((index * 0x4 + 0x120) << 2));\n\t\t\t\t\n\n\t\t\t\treturn
+      = asfloat(attributeBuffer.Load3((index * 0x4 + 0x240) << 2));\n\t\t\t\t\n\n\t\t\t\treturn
       attributes.position;\n\t\t\t}\n\t\t\t\n\t\t\tfloat3 GetStripTangent(float3
       currentPos, uint relativeIndex, const StripData stripData)\n\t\t\t{\n\t\t\t\tfloat3
       prevTangent = (float3)0.0f;\n\t\t\t\tif (relativeIndex > 0)\n\t\t\t\t{\n\t\t\t\t\tuint
@@ -747,26 +810,26 @@ VisualEffectResource:
       attributes = (Attributes)0;\n\t\t\t\t\t\tSourceAttributes sourceAttributes
       = (SourceAttributes)0;\n\t\t\t\t\t\t\n\t\t\t\t\t\t#if VFX_HAS_INDIRECT_DRAW\n\t\t\t\t\t\tindex
       = indirectBuffer[index];\n\t\t\t\t\t\tattributes.lifetime = asfloat(attributeBuffer.Load((index
-      * 0x1 + 0x80) << 2));\n\t\t\t\t\t\tattributes.texIndex = asfloat(attributeBuffer.Load((index
-      * 0x3 + 0xA0) << 2));\n\t\t\t\t\t\tattributes.angleZ = asfloat(attributeBuffer.Load((index
-      * 0x1 + 0x100) << 2));\n\t\t\t\t\t\tattributes.age = asfloat(attributeBuffer.Load((index
-      * 0x3 + 0xA1) << 2));\n\t\t\t\t\t\tattributes.position = asfloat(attributeBuffer.Load3((index
-      * 0x4 + 0x120) << 2));\n\t\t\t\t\t\tattributes.color = float3(1, 1, 1);\n\t\t\t\t\t\tattributes.alpha
+      * 0x1 + 0x100) << 2));\n\t\t\t\t\t\tattributes.texIndex = asfloat(attributeBuffer.Load((index
+      * 0x3 + 0x140) << 2));\n\t\t\t\t\t\tattributes.angleZ = asfloat(attributeBuffer.Load((index
+      * 0x1 + 0x200) << 2));\n\t\t\t\t\t\tattributes.age = asfloat(attributeBuffer.Load((index
+      * 0x3 + 0x141) << 2));\n\t\t\t\t\t\tattributes.position = asfloat(attributeBuffer.Load3((index
+      * 0x4 + 0x240) << 2));\n\t\t\t\t\t\tattributes.color = float3(1, 1, 1);\n\t\t\t\t\t\tattributes.alpha
       = (float)1;\n\t\t\t\t\t\tattributes.alive = (attributeBuffer.Load((index *
-      0x3 + 0xA2) << 2));\n\t\t\t\t\t\tattributes.axisX = float3(1, 0, 0);\n\t\t\t\t\t\tattributes.axisY
+      0x3 + 0x142) << 2));\n\t\t\t\t\t\tattributes.axisX = float3(1, 0, 0);\n\t\t\t\t\t\tattributes.axisY
       = float3(0, 1, 0);\n\t\t\t\t\t\tattributes.axisZ = float3(0, 0, 1);\n\t\t\t\t\t\tattributes.angleX
       = (float)0;\n\t\t\t\t\t\tattributes.angleY = (float)0;\n\t\t\t\t\t\tattributes.pivotX
       = (float)0;\n\t\t\t\t\t\tattributes.pivotY = (float)0;\n\t\t\t\t\t\tattributes.pivotZ
       = (float)0;\n\t\t\t\t\t\tattributes.size = (float)0.100000001;\n\t\t\t\t\t\tattributes.scaleX
       = (float)1;\n\t\t\t\t\t\tattributes.scaleY = (float)1;\n\t\t\t\t\t\tattributes.scaleZ
       = (float)1;\n\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t#else\n\t\t\t\t\t\tattributes.alive
-      = (attributeBuffer.Load((index * 0x3 + 0xA2) << 2));\n\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t#if
+      = (attributeBuffer.Load((index * 0x3 + 0x142) << 2));\n\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t#if
       !HAS_STRIPS\n\t\t\t\t\t\tif (!attributes.alive)\n\t\t\t\t\t\t\treturn o;\n\t\t\t\t\t\t#endif\n\t\t\t\t\t\t\t\n\t\t\t\t\t\tattributes.lifetime
-      = asfloat(attributeBuffer.Load((index * 0x1 + 0x80) << 2));\n\t\t\t\t\t\tattributes.texIndex
-      = asfloat(attributeBuffer.Load((index * 0x3 + 0xA0) << 2));\n\t\t\t\t\t\tattributes.angleZ
-      = asfloat(attributeBuffer.Load((index * 0x1 + 0x100) << 2));\n\t\t\t\t\t\tattributes.age
-      = asfloat(attributeBuffer.Load((index * 0x3 + 0xA1) << 2));\n\t\t\t\t\t\tattributes.position
-      = asfloat(attributeBuffer.Load3((index * 0x4 + 0x120) << 2));\n\t\t\t\t\t\tattributes.color
+      = asfloat(attributeBuffer.Load((index * 0x1 + 0x100) << 2));\n\t\t\t\t\t\tattributes.texIndex
+      = asfloat(attributeBuffer.Load((index * 0x3 + 0x140) << 2));\n\t\t\t\t\t\tattributes.angleZ
+      = asfloat(attributeBuffer.Load((index * 0x1 + 0x200) << 2));\n\t\t\t\t\t\tattributes.age
+      = asfloat(attributeBuffer.Load((index * 0x3 + 0x141) << 2));\n\t\t\t\t\t\tattributes.position
+      = asfloat(attributeBuffer.Load3((index * 0x4 + 0x240) << 2));\n\t\t\t\t\t\tattributes.color
       = float3(1, 1, 1);\n\t\t\t\t\t\tattributes.alpha = (float)1;\n\t\t\t\t\t\tattributes.axisX
       = float3(1, 0, 0);\n\t\t\t\t\t\tattributes.axisY = float3(0, 1, 0);\n\t\t\t\t\t\tattributes.axisZ
       = float3(0, 0, 1);\n\t\t\t\t\t\tattributes.angleX = (float)0;\n\t\t\t\t\t\tattributes.angleY
@@ -858,24 +921,19 @@ VisualEffectResource:
       && defined (VFX_VARYING_FRAMEBLEND)\n\t\t\t\t\t\to.VFX_VARYING_UV.zw = uvData.uvs.zw;\n\t\t\t\t\t\to.VFX_VARYING_FRAMEBLEND
       = uvData.blend;\n\t\t\t\t\t\t#if USE_FLIPBOOK_MOTIONVECTORS && defined(VFX_VARYING_MOTIONVECTORSCALE)\n\t\t\t\t\t\t\n\t\t\t\t\t\to.VFX_VARYING_MOTIONVECTORSCALE
       = motionVectorScale * invFlipBookSize;\n\t\t\t\t\t\t#endif\n\t\t\t\t\t\t#endif\n\t\t\t\t\t\t#endif\n\t\t\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t   
-      \n\t\t\t    float3 GISamplePosition__ = (float3)0;{\n\t\t\t        float3 tmp_bb
-      = mul(uniform_d, float4(attributes.position, 1.0)).xyz;\n\t\t\t        \n\t\t\t       
-      GISamplePosition__ = tmp_bb;\n\t\t\t    }\n\t\t\t    o.GISamplePosition = GISamplePosition__;float
-      BentNormal__ = (float)0;{\n\t\t\t        \n\t\t\t        BentNormal__ = (float)0.845161319;\n\t\t\t   
-      }\n\t\t\t    o.BentNormal = BentNormal__;bool UseMainTextureColor__ = (bool)0;{\n\t\t\t       
-      \n\t\t\t        UseMainTextureColor__ = (bool)false;\n\t\t\t    }\n\t\t\t   
-      o.UseMainTextureColor = UseMainTextureColor__;float2 FlipbookSize__ = (float2)0;{\n\t\t\t       
+      \n\t\t\t    bool UseMainTextureColor__ = (bool)0;{\n\t\t\t        \n\t\t\t       
+      UseMainTextureColor__ = (bool)false;\n\t\t\t    }\n\t\t\t    o.UseMainTextureColor
+      = UseMainTextureColor__;float2 FlipbookSize__ = (float2)0;{\n\t\t\t       
       \n\t\t\t        FlipbookSize__ = float2(8, 8);\n\t\t\t    }\n\t\t\t    o.FlipbookSize
-      = FlipbookSize__;float4 VFX_ColorAndAlpha__ = (float4)0;{\n\t\t\t        float
-      tmp_bb = attributes.color[0];\n\t\t\t        float tmp_bc = attributes.color[1];\n\t\t\t       
-      float tmp_bd = attributes.color[2];\n\t\t\t        float4 tmp_be = float4(tmp_bb,
-      tmp_bc, tmp_bd, attributes.alpha);\n\t\t\t        \n\t\t\t        VFX_ColorAndAlpha__
-      = tmp_be;\n\t\t\t    }\n\t\t\t    o.VFX_ColorAndAlpha = VFX_ColorAndAlpha__;float
+      = FlipbookSize__;float SoftParticleDistance__ = (float)0;{\n\t\t\t        \n\t\t\t       
+      SoftParticleDistance__ = (float)1;\n\t\t\t    }\n\t\t\t    o.SoftParticleDistance
+      = SoftParticleDistance__;float4 VFX_ColorAndAlpha__ = (float4)0;{\n\t\t\t       
+      float tmp_bg = attributes.color[0];\n\t\t\t        float tmp_bh = attributes.color[1];\n\t\t\t       
+      float tmp_bi = attributes.color[2];\n\t\t\t        float4 tmp_bj = float4(tmp_bg,
+      tmp_bh, tmp_bi, attributes.alpha);\n\t\t\t        \n\t\t\t        VFX_ColorAndAlpha__
+      = tmp_bj;\n\t\t\t    }\n\t\t\t    o.VFX_ColorAndAlpha = VFX_ColorAndAlpha__;float
       VFX_texIndex__ = (float)0;{\n\t\t\t        VFX_texIndex__ = attributes.texIndex;\n\t\t\t   
-      }\n\t\t\t    o.VFX_texIndex = VFX_texIndex__;float SoftParticleDistance__ =
-      (float)0;{\n\t\t\t        \n\t\t\t        SoftParticleDistance__ = (float)1;\n\t\t\t   
-      }\n\t\t\t    o.SoftParticleDistance = SoftParticleDistance__;\n\n\t\t\t\n\t\t\t\treturn
-      o;\n\t\t\t}\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t#include
+      }\n\t\t\t    o.VFX_texIndex = VFX_texIndex__;\n\n\t\t\t\n\t\t\t\treturn o;\n\t\t\t}\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t#include
       \"Packages/com.unity.visualeffectgraph/Shaders/VFXCommonOutput.hlsl\"\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t#if
       VFX_SHADERGRAPH\n\t\t\t#define REQUIRE_DEPTH_TEXTURE\n\t\t\t\n\t\t\t\t\t#include
       \"Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl\"\n\t\t\t\t\t#include
@@ -943,45 +1001,32 @@ VisualEffectResource:
       Branch\n\t\t\tvoid Unity_Branch_float4(float Predicate, float4 True, float4
       False, out float4 Out)\n\t\t\t{\n\t\t\t    Out = lerp(False, True, Predicate);\n\t\t\t}\n\t\t\t\n\t\t\t//
       Node: Multiply\n\t\t\tvoid Unity_Multiply_float(float4 A, float4 B, out float4
-      Out)\n\t\t\t{\n\t\t\t    Out = A * B;\n\t\t\t}\n\t\t\t\n\t\t\t// Node: VFX-ComputeNormalBending\n\t\t\tvoid
-      Unity_Remap_float2(float2 In, float2 InMinMax, float2 OutMinMax, out float2
-      Out)\n\t\t\t{\n\t\t\t    Out = OutMinMax.x + (In - InMinMax.x) * (OutMinMax.y
-      - OutMinMax.x) / (InMinMax.y - InMinMax.x);\n\t\t\t}\n\t\t\t\n\t\t\t// Node:
-      VFX-ComputeNormalBending, Multiply\n\t\t\tvoid Unity_Multiply_float(float3
-      A, float3 B, out float3 Out)\n\t\t\t{\n\t\t\t    Out = A * B;\n\t\t\t}\n\t\t\t\n\t\t\t//
-      Node: VFX-ComputeNormalBending\n\t\t\tvoid Unity_CrossProduct_float(float3
-      A, float3 B, out float3 Out)\n\t\t\t{\n\t\t\t    Out = cross(A, B);\n\t\t\t}\n\t\t\t\n\t\t\t//
-      Node: VFX-ComputeNormalBending\n\t\t\tvoid Unity_Add_float3(float3 A, float3
-      B, out float3 Out)\n\t\t\t{\n\t\t\t    Out = A + B;\n\t\t\t}\n\t\t\t\n\t\t\t//
-      Node: VFX-ComputeNormalBending\n\t\t\tvoid Unity_Lerp_float3(float3 A, float3
-      B, float3 T, out float3 Out)\n\t\t\t{\n\t\t\t    Out = lerp(A, B, T);\n\t\t\t}\n\t\t\t\n\t\t\t//
-      Node: VFX-ComputeNormalBending\n\t\t\tstruct Bindings_VFXComputeNormalBending_d726eabe514a4f047bb53177dabf877f\n\t\t\t{\n\t\t\t   
-      float3 WorldSpaceNormal;\n\t\t\t    float3 WorldSpaceTangent;\n\t\t\t    half4
-      uv0;\n\t\t\t};\n\t\t\t\n\t\t\tvoid SG_VFXComputeNormalBending_d726eabe514a4f047bb53177dabf877f(float
-      Vector1_E1392B4, Bindings_VFXComputeNormalBending_d726eabe514a4f047bb53177dabf877f
-      IN, out float3 BentNormal_1)\n\t\t\t{\n\t\t\t    float4 _UV_A3B61FC9_Out_0
-      = IN.uv0;\n\t\t\t    float _Split_6792B6DF_R_1 = _UV_A3B61FC9_Out_0[0];\n\t\t\t   
-      float _Split_6792B6DF_G_2 = _UV_A3B61FC9_Out_0[1];\n\t\t\t    float _Split_6792B6DF_B_3
-      = _UV_A3B61FC9_Out_0[2];\n\t\t\t    float _Split_6792B6DF_A_4 = _UV_A3B61FC9_Out_0[3];\n\t\t\t   
-      float2 _Vector2_E9145C2_Out_0 = float2(_Split_6792B6DF_R_1, _Split_6792B6DF_G_2);\n\t\t\t   
-      float2 _Remap_EAAD42EE_Out_3;\n\t\t\t    Unity_Remap_float2(_Vector2_E9145C2_Out_0,
-      float2 (0, 1), float2 (-1, 1), _Remap_EAAD42EE_Out_3);\n\t\t\t    float _Split_CF4C532_R_1
-      = _Remap_EAAD42EE_Out_3[0];\n\t\t\t    float _Split_CF4C532_G_2 = _Remap_EAAD42EE_Out_3[1];\n\t\t\t   
-      float _Split_CF4C532_B_3 = 0;\n\t\t\t    float _Split_CF4C532_A_4 = 0;\n\t\t\t   
-      float3 _Multiply_2437CC74_Out_2;\n\t\t\t    Unity_Multiply_float(IN.WorldSpaceTangent,
-      (_Split_CF4C532_R_1.xxx), _Multiply_2437CC74_Out_2);\n\t\t\t    float3 _CrossProduct_6F759501_Out_2;\n\t\t\t   
-      Unity_CrossProduct_float(IN.WorldSpaceTangent, IN.WorldSpaceNormal, _CrossProduct_6F759501_Out_2);\n\t\t\t   
-      float3 _Multiply_CD31C8CE_Out_2;\n\t\t\t    Unity_Multiply_float(_CrossProduct_6F759501_Out_2,
-      (_Split_CF4C532_G_2.xxx), _Multiply_CD31C8CE_Out_2);\n\t\t\t    float3 _Add_D8FA50CB_Out_2;\n\t\t\t   
-      Unity_Add_float3(_Multiply_2437CC74_Out_2, _Multiply_CD31C8CE_Out_2, _Add_D8FA50CB_Out_2);\n\t\t\t   
-      float _Property_800E5A69_Out_0 = Vector1_E1392B4;\n\t\t\t    float3 _Lerp_A9C451F8_Out_3;\n\t\t\t   
-      Unity_Lerp_float3(IN.WorldSpaceNormal, _Add_D8FA50CB_Out_2, (_Property_800E5A69_Out_0.xxx),
-      _Lerp_A9C451F8_Out_3);\n\t\t\t    BentNormal_1 = _Lerp_A9C451F8_Out_3;\n\t\t\t}\n\t\t\t\n\t\t\t//
-      Node: Baked GI\n\t\t\tvoid Unity_BakedGIScale_float(float3 Normal, out float3
-      Out, float3 Position, float2 StaticUV, float2 DynamicUV)\n\t\t\t{\n\t\t\t   
-      Out = SHADERGRAPH_BAKED_GI(Position, Normal, StaticUV, DynamicUV, true);\n\t\t\t}\n\t\t\t\n\t\t\t//
-      Node: SoftParticle\n\t\t\tvoid Unity_SceneDepth_Eye_float(float4 UV, out float
-      Out)\n\t\t\t{\n\t\t\t    Out = LinearEyeDepth(SHADERGRAPH_SAMPLE_SCENE_DEPTH(UV.xy),
+      Out)\n\t\t\t{\n\t\t\t    Out = A * B;\n\t\t\t}\n\t\t\t\n\t\t\t// Node: Normal
+      Unpack\n\t\t\tvoid Unity_NormalUnpack_float(float4 In, out float3 Out)\n\t\t\t{\n\t\t\t               
+      Out = UnpackNormal(In);\n\t\t\t            }\n\t\t\t\n\t\t\t// Node: Baked
+      GI\n\t\t\tvoid Unity_BakedGIScale_float(float3 Normal, out float3 Out, float3
+      Position, float2 StaticUV, float2 DynamicUV)\n\t\t\t{\n\t\t\t    Out = SHADERGRAPH_BAKED_GI(Position,
+      Normal, StaticUV, DynamicUV, true);\n\t\t\t}\n\t\t\t\n\t\t\t// Node: Distance\n\t\t\tvoid
+      Unity_Distance_float3(float3 A, float3 B, out float Out)\n\t\t\t{\n\t\t\t   
+      Out = distance(A, B);\n\t\t\t}\n\t\t\t\n\t\t\t// Node: Divide, SoftParticle\n\t\t\tvoid
+      Unity_Divide_float(float A, float B, out float Out)\n\t\t\t{\n\t\t\t    Out
+      = A / B;\n\t\t\t}\n\t\t\t\n\t\t\t// Node: Saturate, SoftParticle\n\t\t\tvoid
+      Unity_Saturate_float(float In, out float Out)\n\t\t\t{\n\t\t\t    Out = saturate(In);\n\t\t\t}\n\t\t\t\n\t\t\t//
+      Node: One Minus\n\t\t\tvoid Unity_OneMinus_float(float In, out float Out)\n\t\t\t{\n\t\t\t   
+      Out = 1 - In;\n\t\t\t}\n\t\t\t\n\t\t\t// Node: Power\n\t\t\tvoid Unity_Power_float(float
+      A, float B, out float Out)\n\t\t\t{\n\t\t\t    Out = pow(A, B);\n\t\t\t}\n\t\t\t\n\t\t\t//
+      Node: Multiply\n\t\t\tvoid Unity_Multiply_float(float3 A, float3 B, out float3
+      Out)\n\t\t\t{\n\t\t\t    Out = A * B;\n\t\t\t}\n\t\t\t\n\t\t\t// Node: Subtract\n\t\t\tvoid
+      Unity_Subtract_float3(float3 A, float3 B, out float3 Out)\n\t\t\t{\n\t\t\t   
+      Out = A - B;\n\t\t\t}\n\t\t\t\n\t\t\t// Node: Normalize\n\t\t\tvoid Unity_Normalize_float3(float3
+      In, out float3 Out)\n\t\t\t{\n\t\t\t    Out = normalize(In);\n\t\t\t}\n\t\t\t\n\t\t\t//
+      Node: Dot Product\n\t\t\tvoid Unity_DotProduct_float3(float3 A, float3 B, out
+      float Out)\n\t\t\t{\n\t\t\t    Out = dot(A, B);\n\t\t\t}\n\t\t\t\n\t\t\t//
+      Node: Lerp\n\t\t\tvoid Unity_Lerp_float3(float3 A, float3 B, float3 T, out
+      float3 Out)\n\t\t\t{\n\t\t\t    Out = lerp(A, B, T);\n\t\t\t}\n\t\t\t\n\t\t\t//
+      Node: Add\n\t\t\tvoid Unity_Add_float3(float3 A, float3 B, out float3 Out)\n\t\t\t{\n\t\t\t   
+      Out = A + B;\n\t\t\t}\n\t\t\t\n\t\t\t// Node: SoftParticle\n\t\t\tvoid Unity_SceneDepth_Eye_float(float4
+      UV, out float Out)\n\t\t\t{\n\t\t\t    Out = LinearEyeDepth(SHADERGRAPH_SAMPLE_SCENE_DEPTH(UV.xy),
       _ZBufferParams);\n\t\t\t}\n\t\t\t\n\t\t\t// Node: SoftParticle\n\t\t\tstruct
       Bindings_PixelDepth_a4fd51fa728c5ac4692b174c7430f87b\n\t\t\t{\n\t\t\t    float4
       ScreenPosition;\n\t\t\t};\n\t\t\t\n\t\t\tvoid SG_PixelDepth_a4fd51fa728c5ac4692b174c7430f87b(Bindings_PixelDepth_a4fd51fa728c5ac4692b174c7430f87b
@@ -992,11 +1037,8 @@ VisualEffectResource:
       = _ScreenPosition_4A338A69_Out_0[3];\n\t\t\t    depth_1 = _Split_E29E317D_A_4;\n\t\t\t}\n\t\t\t\n\t\t\t//
       Node: SoftParticle\n\t\t\tvoid Unity_Maximum_float(float A, float B, out float
       Out)\n\t\t\t{\n\t\t\t    Out = max(A, B);\n\t\t\t}\n\t\t\t\n\t\t\t// Node:
-      SoftParticle\n\t\t\tvoid Unity_Divide_float(float A, float B, out float Out)\n\t\t\t{\n\t\t\t   
-      Out = A / B;\n\t\t\t}\n\t\t\t\n\t\t\t// Node: SoftParticle\n\t\t\tvoid Unity_Smoothstep_float(float
-      Edge1, float Edge2, float In, out float Out)\n\t\t\t{\n\t\t\t    Out = smoothstep(Edge1,
-      Edge2, In);\n\t\t\t}\n\t\t\t\n\t\t\t// Node: SoftParticle\n\t\t\tvoid Unity_Saturate_float(float
-      In, out float Out)\n\t\t\t{\n\t\t\t    Out = saturate(In);\n\t\t\t}\n\t\t\t\n\t\t\t//
+      SoftParticle\n\t\t\tvoid Unity_Smoothstep_float(float Edge1, float Edge2, float
+      In, out float Out)\n\t\t\t{\n\t\t\t    Out = smoothstep(Edge1, Edge2, In);\n\t\t\t}\n\t\t\t\n\t\t\t//
       Node: SoftParticle\n\t\t\tstruct Bindings_SoftParticle_30b7e1d9500bb7e4c8d0ae6c56a9e9a1\n\t\t\t{\n\t\t\t   
       float4 ScreenPosition;\n\t\t\t};\n\t\t\t\n\t\t\tvoid SG_SoftParticle_30b7e1d9500bb7e4c8d0ae6c56a9e9a1(float
       Vector1_1E6191B, Bindings_SoftParticle_30b7e1d9500bb7e4c8d0ae6c56a9e9a1 IN,
@@ -1014,22 +1056,28 @@ VisualEffectResource:
       float _Smoothstep_254B27B2_Out_3;\n\t\t\t    Unity_Smoothstep_float(0, 1, _Divide_A3A47144_Out_2,
       _Smoothstep_254B27B2_Out_3);\n\t\t\t    float _Saturate_3A4F4D3C_Out_1;\n\t\t\t   
       Unity_Saturate_float(_Smoothstep_254B27B2_Out_3, _Saturate_3A4F4D3C_Out_1);\n\t\t\t   
-      Opacity_1 = _Saturate_3A4F4D3C_Out_1;\n\t\t\t}\n\t\t\t\n\t\t\tstruct SG_Input_4e2520bf956c0c14d98648a49ca22bf3\n\t\t\t{\n\t\t\t   
-      float3 WorldSpaceNormal;\n\t\t\t    float3 WorldSpaceTangent;\n\t\t\t    float4
-      ScreenPosition;\n\t\t\t    half4 uv0;\n\t\t\t    half4 uv1;\n\t\t\t    half4
-      uv2;\n\t\t\t};\n\t\t\t\n\t\t\tstruct SG_Output_4e2520bf956c0c14d98648a49ca22bf3\n\t\t\t{\n\t\t\t   
-      float3 Color_6;\n\t\t\t    float Alpha_4;\n\t\t\t};\n\t\t\t\n\t\t\tSG_Output_4e2520bf956c0c14d98648a49ca22bf3
-      SG_Evaluate_4e2520bf956c0c14d98648a49ca22bf3(\n\t\t\t    SG_Input_4e2520bf956c0c14d98648a49ca22bf3
-      IN,\n\t\t\t    /* Property: GISamplePosition */ float3 GISamplePosition,\n\t\t\t   
-      /* Property: BentNormal */ float BentNormal,\n\t\t\t    /* Property: MainTexture
-      */ TEXTURE2D_PARAM(MainTexture, samplerMainTexture), float4 MainTexture_TexelSize,\n\t\t\t   
-      /* Property: UseMainTextureColor */ float UseMainTextureColor,\n\t\t\t    /*
-      Property: FlipbookSize */ float2 FlipbookSize,\n\t\t\t    /* Property: VFX_ColorAndAlpha
-      */ float4 VFX_ColorAndAlpha,\n\t\t\t    /* Property: VFX_texIndex */ float
-      VFX_texIndex,\n\t\t\t    /* Property: SoftParticleDistance */ float SoftParticleDistance)\n\t\t\t{\n\t\t\t   
-      // Node: Property\n\t\t\t    float _Property_6A2D2532_Out_0 = UseMainTextureColor;\n\t\t\t\n\t\t\t   
-      // Node: UV\n\t\t\t    float4 _UV_D00428C_Out_0 = IN.uv0;\n\t\t\t\n\t\t\t   
-      // Node: Property\n\t\t\t    float2 _Property_5856A640_Out_0 = FlipbookSize;\n\t\t\t\n\t\t\t   
+      Opacity_1 = _Saturate_3A4F4D3C_Out_1;\n\t\t\t}\n\t\t\t\n\t\t\tstruct SG_Input_f9a154a7d8c03bb4fabd47afca2e760f\n\t\t\t{\n\t\t\t   
+      float3 WorldSpaceNormal;\n\t\t\t    float3 WorldSpaceTangent;\n\t\t\t    float3
+      WorldSpaceBiTangent;\n\t\t\t    float3 WorldSpacePosition;\n\t\t\t    float3
+      AbsoluteWorldSpacePosition;\n\t\t\t    float4 ScreenPosition;\n\t\t\t    half4
+      uv0;\n\t\t\t    half4 uv1;\n\t\t\t    half4 uv2;\n\t\t\t};\n\t\t\t\n\t\t\tstruct
+      SG_Output_f9a154a7d8c03bb4fabd47afca2e760f\n\t\t\t{\n\t\t\t    float3 Color_6;\n\t\t\t   
+      float Alpha_4;\n\t\t\t};\n\t\t\t\n\t\t\tSG_Output_f9a154a7d8c03bb4fabd47afca2e760f
+      SG_Evaluate_f9a154a7d8c03bb4fabd47afca2e760f(\n\t\t\t    SG_Input_f9a154a7d8c03bb4fabd47afca2e760f
+      IN,\n\t\t\t    /* Property: MainTexture */ TEXTURE2D_PARAM(MainTexture, samplerMainTexture),
+      float4 MainTexture_TexelSize,\n\t\t\t    /* Property: NormalMap */ TEXTURE2D_PARAM(NormalMap,
+      samplerNormalMap), float4 NormalMap_TexelSize,\n\t\t\t    /* Property: UseMainTextureColor
+      */ float UseMainTextureColor,\n\t\t\t    /* Property: FlipbookSize */ float2
+      FlipbookSize,\n\t\t\t    /* Property: SoftParticleDistance */ float SoftParticleDistance,\n\t\t\t   
+      /* Property: VFX_ColorAndAlpha */ float4 VFX_ColorAndAlpha,\n\t\t\t    /* Property:
+      VFX_texIndex */ float VFX_texIndex,\n\t\t\t    /* Property: LightPosition */
+      float3 LightPosition,\n\t\t\t    /* Property: LightRadius */ float LightRadius,\n\t\t\t   
+      /* Property: LightIntensity */ float LightIntensity,\n\t\t\t    /* Property:
+      LightColor */ float3 LightColor,\n\t\t\t    /* Property: Directionality */
+      float Directionality)\n\t\t\t{\n\t\t\t    // Node: Property\n\t\t\t    float
+      _Property_6A2D2532_Out_0 = UseMainTextureColor;\n\t\t\t\n\t\t\t    // Node:
+      UV\n\t\t\t    float4 _UV_D00428C_Out_0 = IN.uv0;\n\t\t\t\n\t\t\t    // Node:
+      Property\n\t\t\t    float2 _Property_5856A640_Out_0 = FlipbookSize;\n\t\t\t\n\t\t\t   
       // Node: Property\n\t\t\t    float _Property_6E46F982_Out_0 = VFX_texIndex;\n\t\t\t\n\t\t\t   
       // Node: Sample Flipbook\n\t\t\t    Bindings_SampleFlipbook_3dfb0d3601745784da8bb664d435f2e7
       _SampleFlipbook_387842B2;\n\t\t\t    float4 _SampleFlipbook_387842B2_Value_1;\n\t\t\t   
@@ -1041,19 +1089,59 @@ VisualEffectResource:
       // Node: Property\n\t\t\t    float4 _Property_AD4F2A65_Out_0 = VFX_ColorAndAlpha;\n\t\t\t\n\t\t\t   
       // Node: Multiply\n\t\t\t    float4 _Multiply_4DAAA23_Out_2;\n\t\t\t    Unity_Multiply_float(_Branch_356763E0_Out_3,
       _Property_AD4F2A65_Out_0, _Multiply_4DAAA23_Out_2);\n\t\t\t\n\t\t\t    // Node:
-      Property\n\t\t\t    float3 _Property_1D27EFF2_Out_0 = GISamplePosition;\n\t\t\t\n\t\t\t   
-      // Node: Property\n\t\t\t    float _Property_5B34C17_Out_0 = BentNormal;\n\t\t\t\n\t\t\t   
-      // Node: VFX-ComputeNormalBending\n\t\t\t    Bindings_VFXComputeNormalBending_d726eabe514a4f047bb53177dabf877f
-      _VFXComputeNormalBending_20122AD4;\n\t\t\t    _VFXComputeNormalBending_20122AD4.WorldSpaceNormal
-      = IN.WorldSpaceNormal;\n\t\t\t    _VFXComputeNormalBending_20122AD4.WorldSpaceTangent
-      = IN.WorldSpaceTangent;\n\t\t\t    _VFXComputeNormalBending_20122AD4.uv0 =
-      IN.uv0;\n\t\t\t    float3 _VFXComputeNormalBending_20122AD4_BentNormal_1;\n\t\t\t   
-      SG_VFXComputeNormalBending_d726eabe514a4f047bb53177dabf877f(_Property_5B34C17_Out_0,
-      _VFXComputeNormalBending_20122AD4, _VFXComputeNormalBending_20122AD4_BentNormal_1);\n\t\t\t\n\t\t\t   
-      // Node: Baked GI\n\t\t\t    float3 _BakedGI_BE8AA604_Out_1;\n\t\t\t    Unity_BakedGIScale_float(_VFXComputeNormalBending_20122AD4_BentNormal_1,
-      _BakedGI_BE8AA604_Out_1, _Property_1D27EFF2_Out_0, IN.uv1.xy, IN.uv2.xy);\n\t\t\t\n\t\t\t   
-      // Node: Multiply\n\t\t\t    float3 _Multiply_110D997A_Out_2;\n\t\t\t    Unity_Multiply_float((_Multiply_4DAAA23_Out_2.xyz),
-      _BakedGI_BE8AA604_Out_1, _Multiply_110D997A_Out_2);\n\t\t\t\n\t\t\t    // Node:
+      UV\n\t\t\t    float4 _UV_1E888847_Out_0 = IN.uv0;\n\t\t\t\n\t\t\t    // Node:
+      Property\n\t\t\t    float2 _Property_D219BF19_Out_0 = FlipbookSize;\n\t\t\t\n\t\t\t   
+      // Node: Property\n\t\t\t    float _Property_2700C1D7_Out_0 = VFX_texIndex;\n\t\t\t\n\t\t\t   
+      // Node: Sample Flipbook\n\t\t\t    Bindings_SampleFlipbook_3dfb0d3601745784da8bb664d435f2e7
+      _SampleFlipbook_171A0EDD;\n\t\t\t    float4 _SampleFlipbook_171A0EDD_Value_1;\n\t\t\t   
+      SG_SampleFlipbook_3dfb0d3601745784da8bb664d435f2e7((_UV_1E888847_Out_0.xy),
+      TEXTURE2D_ARGS(NormalMap, samplerNormalMap), NormalMap_TexelSize, _Property_D219BF19_Out_0,
+      _Property_2700C1D7_Out_0, _SampleFlipbook_171A0EDD, _SampleFlipbook_171A0EDD_Value_1);\n\t\t\t\n\t\t\t   
+      // Node: Normal Unpack\n\t\t\t    float3 _NormalUnpack_9A4A8F32_Out_1;\n\t\t\t   
+      Unity_NormalUnpack_float(_SampleFlipbook_171A0EDD_Value_1, _NormalUnpack_9A4A8F32_Out_1);\n\t\t\t\n\t\t\t   
+      // Node: Transform\n\t\t\t    float3x3 Transform_AFCAAEF8_transposeTangent
+      = transpose(float3x3(IN.WorldSpaceTangent, IN.WorldSpaceBiTangent, IN.WorldSpaceNormal));\n\t\t\t   
+      float3 _Transform_AFCAAEF8_Out_1 = mul(Transform_AFCAAEF8_transposeTangent,
+      _NormalUnpack_9A4A8F32_Out_1.xyz).xyz;\n\t\t\t\n\t\t\t    // Node: Baked GI\n\t\t\t   
+      float3 _BakedGI_26FC969_Out_1;\n\t\t\t    Unity_BakedGIScale_float(_Transform_AFCAAEF8_Out_1,
+      _BakedGI_26FC969_Out_1, IN.WorldSpacePosition, IN.uv1.xy, IN.uv2.xy);\n\t\t\t\n\t\t\t   
+      // Node: Property\n\t\t\t    float3 _Property_ACB2B7DD_Out_0 = LightPosition;\n\t\t\t\n\t\t\t   
+      // Node: Distance\n\t\t\t    float _Distance_932FAA6F_Out_2;\n\t\t\t    Unity_Distance_float3(_Property_ACB2B7DD_Out_0,
+      IN.AbsoluteWorldSpacePosition, _Distance_932FAA6F_Out_2);\n\t\t\t\n\t\t\t   
+      // Node: Property\n\t\t\t    float _Property_C1DB092A_Out_0 = LightRadius;\n\t\t\t\n\t\t\t   
+      // Node: Divide\n\t\t\t    float _Divide_D78E0612_Out_2;\n\t\t\t    Unity_Divide_float(_Distance_932FAA6F_Out_2,
+      _Property_C1DB092A_Out_0, _Divide_D78E0612_Out_2);\n\t\t\t\n\t\t\t    // Node:
+      Saturate\n\t\t\t    float _Saturate_C4A368A_Out_1;\n\t\t\t    Unity_Saturate_float(_Divide_D78E0612_Out_2,
+      _Saturate_C4A368A_Out_1);\n\t\t\t\n\t\t\t    // Node: One Minus\n\t\t\t   
+      float _OneMinus_878A5343_Out_1;\n\t\t\t    Unity_OneMinus_float(_Saturate_C4A368A_Out_1,
+      _OneMinus_878A5343_Out_1);\n\t\t\t\n\t\t\t    // Node: Vector 1\n\t\t\t   
+      float _Vector1_E91DAE72_Out_0 = 2;\n\t\t\t\n\t\t\t    // Node: Power\n\t\t\t   
+      float _Power_24F78521_Out_2;\n\t\t\t    Unity_Power_float(_OneMinus_878A5343_Out_1,
+      _Vector1_E91DAE72_Out_0, _Power_24F78521_Out_2);\n\t\t\t\n\t\t\t    // Node:
+      Property\n\t\t\t    float3 _Property_A5B1EE3D_Out_0 = LightColor;\n\t\t\t\n\t\t\t   
+      // Node: Property\n\t\t\t    float _Property_7A3FBB03_Out_0 = LightIntensity;\n\t\t\t\n\t\t\t   
+      // Node: Multiply\n\t\t\t    float3 _Multiply_3C753F19_Out_2;\n\t\t\t    Unity_Multiply_float(_Property_A5B1EE3D_Out_0,
+      (_Property_7A3FBB03_Out_0.xxx), _Multiply_3C753F19_Out_2);\n\t\t\t\n\t\t\t   
+      // Node: Multiply\n\t\t\t    float3 _Multiply_F1361EE8_Out_2;\n\t\t\t    Unity_Multiply_float((_Power_24F78521_Out_2.xxx),
+      _Multiply_3C753F19_Out_2, _Multiply_F1361EE8_Out_2);\n\t\t\t\n\t\t\t    //
+      Node: Subtract\n\t\t\t    float3 _Subtract_D5335E54_Out_2;\n\t\t\t    Unity_Subtract_float3(_Property_ACB2B7DD_Out_0,
+      IN.AbsoluteWorldSpacePosition, _Subtract_D5335E54_Out_2);\n\t\t\t\n\t\t\t   
+      // Node: Normalize\n\t\t\t    float3 _Normalize_DE6DF96C_Out_1;\n\t\t\t   
+      Unity_Normalize_float3(_Subtract_D5335E54_Out_2, _Normalize_DE6DF96C_Out_1);\n\t\t\t\n\t\t\t   
+      // Node: Dot Product\n\t\t\t    float _DotProduct_D0294354_Out_2;\n\t\t\t   
+      Unity_DotProduct_float3(_Transform_AFCAAEF8_Out_1, _Normalize_DE6DF96C_Out_1,
+      _DotProduct_D0294354_Out_2);\n\t\t\t\n\t\t\t    // Node: Saturate\n\t\t\t   
+      float _Saturate_99A8C3C7_Out_1;\n\t\t\t    Unity_Saturate_float(_DotProduct_D0294354_Out_2,
+      _Saturate_99A8C3C7_Out_1);\n\t\t\t\n\t\t\t    // Node: Multiply\n\t\t\t   
+      float3 _Multiply_A90215E1_Out_2;\n\t\t\t    Unity_Multiply_float((_Saturate_99A8C3C7_Out_1.xxx),
+      _Multiply_F1361EE8_Out_2, _Multiply_A90215E1_Out_2);\n\t\t\t\n\t\t\t    //
+      Node: Property\n\t\t\t    float _Property_72ADA031_Out_0 = Directionality;\n\t\t\t\n\t\t\t   
+      // Node: Lerp\n\t\t\t    float3 _Lerp_E52A1BD7_Out_3;\n\t\t\t    Unity_Lerp_float3(_Multiply_F1361EE8_Out_2,
+      _Multiply_A90215E1_Out_2, (_Property_72ADA031_Out_0.xxx), _Lerp_E52A1BD7_Out_3);\n\t\t\t\n\t\t\t   
+      // Node: Add\n\t\t\t    float3 _Add_9ECD3E10_Out_2;\n\t\t\t    Unity_Add_float3(_BakedGI_26FC969_Out_1,
+      _Lerp_E52A1BD7_Out_3, _Add_9ECD3E10_Out_2);\n\t\t\t\n\t\t\t    // Node: Multiply\n\t\t\t   
+      float3 _Multiply_110D997A_Out_2;\n\t\t\t    Unity_Multiply_float((_Multiply_4DAAA23_Out_2.xyz),
+      _Add_9ECD3E10_Out_2, _Multiply_110D997A_Out_2);\n\t\t\t\n\t\t\t    // Node:
       Split\n\t\t\t    float _Split_7EF68A6B_R_1 = _Property_AD4F2A65_Out_0[0];\n\t\t\t   
       float _Split_7EF68A6B_G_2 = _Property_AD4F2A65_Out_0[1];\n\t\t\t    float _Split_7EF68A6B_B_3
       = _Property_AD4F2A65_Out_0[2];\n\t\t\t    float _Split_7EF68A6B_A_4 = _Property_AD4F2A65_Out_0[3];\n\t\t\t\n\t\t\t   
@@ -1071,7 +1159,7 @@ VisualEffectResource:
       _SoftParticle_63F41AE2, _SoftParticle_63F41AE2_Opacity_1);\n\t\t\t\n\t\t\t   
       // Node: Multiply\n\t\t\t    float _Multiply_63CA015_Out_2;\n\t\t\t    Unity_Multiply_float(_Multiply_F76A5928_Out_2,
       _SoftParticle_63F41AE2_Opacity_1, _Multiply_63CA015_Out_2);\n\t\t\t\n\t\t\t   
-      // Visual Effect Master\n\t\t\t    SG_Output_4e2520bf956c0c14d98648a49ca22bf3
+      // Visual Effect Master\n\t\t\t    SG_Output_f9a154a7d8c03bb4fabd47afca2e760f
       OUT;\n\t\t\t    OUT.Color_6 = _Multiply_110D997A_Out_2;\n\t\t\t    OUT.Alpha_4
       = _Multiply_63CA015_Out_2;\n\t\t\t    return OUT;\n\t\t\t}\n\t\t\t\n\n\t\t#endif\n\t\t\t\t\n\t\t\t#pragma
       fragment frag\n\t\t\tps_output frag(ps_input i)\n\t\t\t{\n\t\t\t\tUNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);\n\t\t\t\tps_output
@@ -1092,21 +1180,24 @@ VisualEffectResource:
       normalScale = 1.0f;\n\t\t\t\t\t\t\t#ifdef VFX_VARYING_NORMALSCALE\n\t\t\t\t\t\t\tnormalScale
       = i.VFX_VARYING_NORMALSCALE;\n\t\t\t\t\t\t\t#endif\n\t\t\t\t\t\t\tnormalWS
       = normalize(lerp(normalWS,mul(n,tbn),normalScale));\n\t\t\t\t\t\t\t#endif\n\t\t\t\t\t\t\t#endif\n\t\t\t\t\t\t\t#endif\n\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t#if
-      VFX_SHADERGRAPH\n\t\t        float3 GISamplePosition = i.GISamplePosition;float
-      BentNormal = i.BentNormal;bool UseMainTextureColor = i.UseMainTextureColor;float2
-      FlipbookSize = i.FlipbookSize;float4 VFX_ColorAndAlpha = i.VFX_ColorAndAlpha;float
-      VFX_texIndex = i.VFX_texIndex;float SoftParticleDistance = i.SoftParticleDistance;\n\t\t       
-      \n\t\t        //Call Shader Graph\n\t\t        SG_Input_4e2520bf956c0c14d98648a49ca22bf3
-      INSG = (SG_Input_4e2520bf956c0c14d98648a49ca22bf3)0;\n\t\t        float3 WorldSpaceNormal
+      VFX_SHADERGRAPH\n\t\t        bool UseMainTextureColor = i.UseMainTextureColor;float2
+      FlipbookSize = i.FlipbookSize;float SoftParticleDistance = i.SoftParticleDistance;float4
+      VFX_ColorAndAlpha = i.VFX_ColorAndAlpha;float VFX_texIndex = i.VFX_texIndex;\n\t\t       
+      \n\t\t        //Call Shader Graph\n\t\t        SG_Input_f9a154a7d8c03bb4fabd47afca2e760f
+      INSG = (SG_Input_f9a154a7d8c03bb4fabd47afca2e760f)0;\n\t\t        float3 WorldSpaceNormal
       = normalize(normalWS.xyz);\n\t\t        INSG.WorldSpaceNormal = WorldSpaceNormal;\n\t\t       
       float3 WorldSpaceTangent = normalize(tangentWS.xyz);\n\t\t        INSG.WorldSpaceTangent
-      =  WorldSpaceTangent;\n\t\t        float3 posRelativeWS = VFXGetPositionRWS(i.VFX_VARYING_POSWS);\n\t\t       
-      float3 posAbsoluteWS = VFXGetPositionAWS(i.VFX_VARYING_POSWS);\n\t\t       
+      =  WorldSpaceTangent;\n\t\t        float3 WorldSpaceBiTangent =  normalize(bitangentWS.xyz);\n\t\t       
+      INSG.WorldSpaceBiTangent =  WorldSpaceBiTangent;\n\t\t        float3 posRelativeWS
+      = VFXGetPositionRWS(i.VFX_VARYING_POSWS);\n\t\t        float3 posAbsoluteWS
+      = VFXGetPositionAWS(i.VFX_VARYING_POSWS);\n\t\t        INSG.WorldSpacePosition
+      = posRelativeWS;\n\t\t        INSG.AbsoluteWorldSpacePosition = posAbsoluteWS;\n\t\t       
       INSG.ScreenPosition = ComputeScreenPos(VFXTransformPositionWorldToClip(i.VFX_VARYING_POSWS),
       _ProjectionParams.x);\n\t\t        INSG.uv0.xy = i.uv;\n\t\t        \n\t\t       
-      SG_Output_4e2520bf956c0c14d98648a49ca22bf3 OUTSG = SG_Evaluate_4e2520bf956c0c14d98648a49ca22bf3(INSG,GISamplePosition,
-      BentNormal, MainTexture, samplerMainTexture, MainTexture_TexelSize, UseMainTextureColor,
-      FlipbookSize, VFX_ColorAndAlpha, VFX_texIndex, SoftParticleDistance);\n\t\t       
+      SG_Output_f9a154a7d8c03bb4fabd47afca2e760f OUTSG = SG_Evaluate_f9a154a7d8c03bb4fabd47afca2e760f(INSG,MainTexture,
+      samplerMainTexture, MainTexture_TexelSize, NormalMap, samplerNormalMap, NormalMap_TexelSize,
+      UseMainTextureColor, FlipbookSize, SoftParticleDistance, VFX_ColorAndAlpha,
+      VFX_texIndex, LightPosition, LightRadius, LightIntensity, LightColor, Directionality);\n\t\t       
       \n\n\t\t        \n\t\t        #if HAS_SHADERGRAPH_PARAM_COLOR\n\t\t           
       o.color.rgb = OUTSG.Color_6.rgb;\n\t\t        #endif\n\t\t        \n\t\t       
       #if HAS_SHADERGRAPH_PARAM_ALPHA \n\t\t            o.color.a = OUTSG.Alpha_4;\n\t\t       
@@ -1144,7 +1235,7 @@ VisualEffectResource:
       id = groupThreadId.x + groupId.x * NB_THREADS_PER_GROUP + groupId.y * dispatchWidth
       * NB_THREADS_PER_GROUP;\r\n\tif (id < threshold)\r\n\t{\r\n\t\tuint index =
       inputBuffer[id];\r\n\t\t\r\n\t\tAttributes attributes = (Attributes)0;\r\n\t\tattributes.position
-      = asfloat(attributeBuffer.Load3((index * 0x4 + 0x120) << 2));\n\t\t\n\r\n\t\t\r\n#if
+      = asfloat(attributeBuffer.Load3((index * 0x4 + 0x240) << 2));\n\t\t\n\r\n\t\t\r\n#if
       VFX_LOCAL_SPACE\r\n\t\tfloat3 wPos = mul(localToWorld,float4(attributes.position,1.0f)).xyz;\r\n#else\r\n\t\tfloat3
       wPos = attributes.position;\r\n#endif\r\n\t\tfloat3 camToPos = wPos - cameraPosition;\r\n\t\t\r\n\t\tKvp
       kvp;\r\n\t\tkvp.sortKey = dot(camToPos,camToPos); // sqr distance to the camera\r\n\t\tkvp.index
@@ -1152,81 +1243,141 @@ VisualEffectResource:
   m_Infos:
     m_Expressions:
       m_Expressions:
-      - op: 9
+      - op: 1
         valueIndex: 0
         data[0]: -1
         data[1]: -1
         data[2]: -1
-        data[3]: -1
+        data[3]: 4
       - op: 1
-        valueIndex: 16
-        data[0]: -1
-        data[1]: -1
-        data[2]: -1
-        data[3]: 14
-      - op: 1
-        valueIndex: 17
+        valueIndex: 4
         data[0]: -1
         data[1]: -1
         data[2]: -1
         data[3]: 13
       - op: 1
-        valueIndex: 18
+        valueIndex: 5
         data[0]: -1
         data[1]: -1
         data[2]: -1
         data[3]: 13
+      - op: 5
+        valueIndex: 6
+        data[0]: 0
+        data[1]: -1
+        data[2]: 2
+        data[3]: 4
+      - op: 5
+        valueIndex: 7
+        data[0]: 0
+        data[1]: -1
+        data[2]: 1
+        data[3]: 4
+      - op: 5
+        valueIndex: 8
+        data[0]: 0
+        data[1]: -1
+        data[2]: 0
+        data[3]: 4
       - op: 1
-        valueIndex: 19
+        valueIndex: 9
         data[0]: -1
         data[1]: -1
         data[2]: -1
         data[3]: 1
       - op: 1
-        valueIndex: 20
+        valueIndex: 10
         data[0]: -1
         data[1]: -1
         data[2]: -1
-        data[3]: 17
+        data[3]: 14
+      - op: 57
+        valueIndex: 11
+        data[0]: 7
+        data[1]: -1
+        data[2]: -1
+        data[3]: 0
       - op: 1
-        valueIndex: 21
+        valueIndex: 12
+        data[0]: -1
+        data[1]: -1
+        data[2]: -1
+        data[3]: 1
+      - op: 1
+        valueIndex: 13
         data[0]: -1
         data[1]: -1
         data[2]: -1
         data[3]: 7
       - op: 1
-        valueIndex: 22
-        data[0]: -1
-        data[1]: -1
-        data[2]: -1
-        data[3]: 1
-      - op: 1
-        valueIndex: 23
-        data[0]: -1
-        data[1]: -1
-        data[2]: -1
-        data[3]: 1
-      - op: 57
-        valueIndex: 24
-        data[0]: 1
-        data[1]: -1
-        data[2]: -1
-        data[3]: 0
-      - op: 56
-        valueIndex: 25
-        data[0]: 2
-        data[1]: -1
-        data[2]: -1
-        data[3]: 0
-      - op: 1
-        valueIndex: 29
+        valueIndex: 14
         data[0]: -1
         data[1]: -1
         data[2]: -1
         data[3]: 2
+      - op: 1
+        valueIndex: 16
+        data[0]: -1
+        data[1]: -1
+        data[2]: -1
+        data[3]: 17
       - op: 56
+        valueIndex: 17
+        data[0]: 2
+        data[1]: -1
+        data[2]: -1
+        data[3]: 0
+      - op: 3
+        valueIndex: 21
+        data[0]: 5
+        data[1]: 4
+        data[2]: 3
+        data[3]: -1
+      - op: 20
+        valueIndex: 24
+        data[0]: 6
+        data[1]: -1
+        data[2]: -1
+        data[3]: 1
+      - op: 1
+        valueIndex: 25
+        data[0]: -1
+        data[1]: -1
+        data[2]: -1
+        data[3]: 7
+      - op: 1
+        valueIndex: 26
+        data[0]: -1
+        data[1]: -1
+        data[2]: -1
+        data[3]: 1
+      - op: 56
+        valueIndex: 27
+        data[0]: 1
+        data[1]: -1
+        data[2]: -1
+        data[3]: 1
+      - op: 6
         valueIndex: 31
-        data[0]: 3
+        data[0]: -1
+        data[1]: -1
+        data[2]: -1
+        data[3]: -1
+      - op: 1
+        valueIndex: 32
+        data[0]: -1
+        data[1]: -1
+        data[2]: -1
+        data[3]: 1
+      - op: 1
+        valueIndex: 33
+        data[0]: -1
+        data[1]: -1
+        data[2]: -1
+        data[3]: 1
+      - op: 1
+        valueIndex: 34
+        data[0]: -1
         data[1]: -1
         data[2]: -1
         data[3]: 1
@@ -1253,19 +1404,7 @@ VisualEffectResource:
         data[0]: -1
         data[1]: -1
         data[2]: -1
-        data[3]: 1
-      - op: 1
-        valueIndex: 39
-        data[0]: -1
-        data[1]: -1
-        data[2]: -1
-        data[3]: 1
-      - op: 1
-        valueIndex: 40
-        data[0]: -1
-        data[1]: -1
-        data[2]: -1
-        data[3]: 1
+        data[3]: 3
       - op: 1
         valueIndex: 41
         data[0]: -1
@@ -1277,56 +1416,72 @@ VisualEffectResource:
         data[0]: -1
         data[1]: -1
         data[2]: -1
-        data[3]: 3
+        data[3]: 1
       - op: 1
-        valueIndex: 47
-        data[0]: -1
-        data[1]: -1
-        data[2]: -1
-        data[3]: 3
-      - op: 1
-        valueIndex: 50
-        data[0]: -1
-        data[1]: -1
-        data[2]: -1
-        data[3]: 3
-      - op: 6
-        valueIndex: 53
-        data[0]: -1
-        data[1]: -1
-        data[2]: -1
-        data[3]: -1
-      - op: 1
-        valueIndex: 54
+        valueIndex: 45
         data[0]: -1
         data[1]: -1
         data[2]: -1
         data[3]: 1
+      - op: 1
+        valueIndex: 46
+        data[0]: -1
+        data[1]: -1
+        data[2]: -1
+        data[3]: 3
+      - op: 1
+        valueIndex: 49
+        data[0]: -1
+        data[1]: -1
+        data[2]: -1
+        data[3]: 3
+      - op: 1
+        valueIndex: 52
+        data[0]: -1
+        data[1]: -1
+        data[2]: -1
+        data[3]: 3
+      - op: 1
+        valueIndex: 55
+        data[0]: -1
+        data[1]: -1
+        data[2]: -1
+        data[3]: 1
+      - op: 9
+        valueIndex: 56
+        data[0]: -1
+        data[1]: -1
+        data[2]: -1
+        data[3]: -1
       m_NeedsLocalToWorld: 1
       m_NeedsWorldToLocal: 0
       m_NeededMainCameraBuffers: 0
     m_PropertySheet:
       m_Float:
         m_Array:
-        - m_ExpressionIndex: 4
-          m_Value: 16
-        - m_ExpressionIndex: 7
-          m_Value: 0.8451613
-        - m_ExpressionIndex: 8
+        - m_ExpressionIndex: 6
+          m_Value: 0.5
+        - m_ExpressionIndex: 9
           m_Value: 1
-        - m_ExpressionIndex: 13
-          m_Value: 0.3
-        - m_ExpressionIndex: 14
-          m_Value: 360
-        - m_ExpressionIndex: 15
-          m_Value: 64
-        - m_ExpressionIndex: 16
-          m_Value: 0
         - m_ExpressionIndex: 17
-          m_Value: 3
-        - m_ExpressionIndex: 18
-          m_Value: 2
+          m_Value: 12
+        - m_ExpressionIndex: 20
+          m_Value: 0.3
+        - m_ExpressionIndex: 21
+          m_Value: 360
+        - m_ExpressionIndex: 22
+          m_Value: 64
+        - m_ExpressionIndex: 23
+          m_Value: 0
         - m_ExpressionIndex: 24
+          m_Value: 6
+        - m_ExpressionIndex: 25
+          m_Value: 4
+        - m_ExpressionIndex: 28
+          m_Value: 0
+        - m_ExpressionIndex: 29
+          m_Value: 3
+        - m_ExpressionIndex: 33
           m_Value: 0.293
       m_Vector2f:
         m_Array:
@@ -1334,16 +1489,20 @@ VisualEffectResource:
           m_Value: {x: 8, y: 8}
       m_Vector3f:
         m_Array:
-        - m_ExpressionIndex: 19
-          m_Value: {x: 0.333, y: 1, z: 0.333}
-        - m_ExpressionIndex: 20
-          m_Value: {x: -0.333, y: 0.8, z: -0.333}
-        - m_ExpressionIndex: 21
+        - m_ExpressionIndex: 26
+          m_Value: {x: 0.1, y: 1, z: 0.1}
+        - m_ExpressionIndex: 27
+          m_Value: {x: -0.1, y: 0.8, z: -0.1}
+        - m_ExpressionIndex: 30
+          m_Value: {x: 2, y: 0, z: 0}
+        - m_ExpressionIndex: 31
           m_Value: {x: 2, y: 3, z: 2}
-        - m_ExpressionIndex: 22
+        - m_ExpressionIndex: 32
           m_Value: {x: 0, y: 1, z: 0}
       m_Vector4f:
-        m_Array: []
+        m_Array:
+        - m_ExpressionIndex: 0
+          m_Value: {x: 0, y: 0, z: 0, w: 0}
       m_Uint:
         m_Array: []
       m_Int:
@@ -1352,6 +1511,31 @@ VisualEffectResource:
         m_Array: []
       m_AnimationCurve:
         m_Array:
+        - m_ExpressionIndex: 1
+          m_Value:
+            serializedVersion: 2
+            m_Curve:
+            - serializedVersion: 3
+              time: 0
+              value: 25
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
+              time: 1
+              value: 2
+              inSlope: -53.702843
+              outSlope: -53.702843
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
         - m_ExpressionIndex: 2
           m_Value:
             serializedVersion: 2
@@ -1377,38 +1561,13 @@ VisualEffectResource:
             m_PreInfinity: 2
             m_PostInfinity: 2
             m_RotationOrder: 4
-        - m_ExpressionIndex: 3
-          m_Value:
-            serializedVersion: 2
-            m_Curve:
-            - serializedVersion: 3
-              time: 0
-              value: 25
-              inSlope: 0
-              outSlope: 0
-              tangentMode: 0
-              weightedMode: 0
-              inWeight: 0
-              outWeight: 0
-            - serializedVersion: 3
-              time: 1
-              value: 2
-              inSlope: -53.702843
-              outSlope: -53.702843
-              tangentMode: 0
-              weightedMode: 0
-              inWeight: 0
-              outWeight: 0
-            m_PreInfinity: 2
-            m_PostInfinity: 2
-            m_RotationOrder: 4
       m_Gradient:
         m_Array:
-        - m_ExpressionIndex: 1
+        - m_ExpressionIndex: 7
           m_Value:
             serializedVersion: 2
-            key0: {r: 1, g: 1, b: 1, a: 0}
-            key1: {r: 1, g: 1, b: 1, a: 1}
+            key0: {r: 0.6037736, g: 0.6037736, b: 0.6037736, a: 0}
+            key1: {r: 0.6037736, g: 0.6037736, b: 0.6037736, a: 1}
             key2: {r: 0, g: 0, b: 0, a: 1}
             key3: {r: 0, g: 0, b: 0, a: 0}
             key4: {r: 0, g: 0, b: 0, a: 0}
@@ -1436,16 +1595,28 @@ VisualEffectResource:
             m_NumAlphaKeys: 4
       m_NamedObject:
         m_Array:
-        - m_ExpressionIndex: 6
+        - m_ExpressionIndex: 10
           m_Value: {fileID: 2800000, guid: acc993ba240f26e4797a3e733b12e5e0, type: 3}
+        - m_ExpressionIndex: 16
+          m_Value: {fileID: 2800000, guid: 94b4eb19099365a41ac1ee284d537678, type: 3}
       m_Bool:
         m_Array:
-        - m_ExpressionIndex: 5
+        - m_ExpressionIndex: 12
           m_Value: 0
-    m_ExposedExpressions: []
+    m_ExposedExpressions:
+    - nameId: Directionality
+      index: 6
+    - nameId: LightColor
+      index: 0
+    - nameId: LightIntensity
+      index: 28
+    - nameId: LightPosition
+      index: 30
+    - nameId: LightRadius
+      index: 29
     m_Buffers:
     - type: 1
-      size: 416
+      size: 832
       layout:
       - name: velocity
         type: 3
@@ -1456,40 +1627,40 @@ VisualEffectResource:
       - name: lifetime
         type: 1
         offset:
-          bucket: 128
+          bucket: 256
           structure: 1
           element: 0
       - name: texIndex
         type: 1
         offset:
-          bucket: 160
+          bucket: 320
           structure: 3
           element: 0
       - name: age
         type: 1
         offset:
-          bucket: 160
+          bucket: 320
           structure: 3
           element: 1
       - name: alive
         type: 17
         offset:
-          bucket: 160
+          bucket: 320
           structure: 3
           element: 2
       - name: angleZ
         type: 1
         offset:
-          bucket: 256
+          bucket: 512
           structure: 1
           element: 0
       - name: position
         type: 3
         offset:
-          bucket: 288
+          bucket: 576
           structure: 4
           element: 0
-      capacity: 32
+      capacity: 64
       stride: 4
     - type: 1
       size: 1
@@ -1503,7 +1674,7 @@ VisualEffectResource:
       capacity: 1
       stride: 4
     - type: 4
-      size: 32
+      size: 64
       layout: []
       capacity: 0
       stride: 4
@@ -1513,17 +1684,17 @@ VisualEffectResource:
       capacity: 0
       stride: 4
     - type: 4
-      size: 32
+      size: 64
       layout: []
       capacity: 0
       stride: 4
     - type: 0
-      size: 32
+      size: 64
       layout: []
       capacity: 0
       stride: 8
     - type: 0
-      size: 32
+      size: 64
       layout: []
       capacity: 0
       stride: 8
@@ -1585,13 +1756,13 @@ VisualEffectResource:
       temporaryBuffers: []
       values:
       - nameId: Rate
-        index: 4
+        index: 17
       params: []
       processor: {fileID: 0}
       shaderSourceIndex: -1
   - type: 1
     flags: 3
-    capacity: 32
+    capacity: 64
     layer: 4294967295
     buffers:
     - nameId: attributeBuffer
@@ -1612,9 +1783,9 @@ VisualEffectResource:
       index: 6
     values:
     - nameId: bounds_center
-      index: 22
+      index: 32
     - nameId: bounds_size
-      index: 21
+      index: 31
     tasks:
     - type: 536870912
       buffers:
@@ -1630,9 +1801,9 @@ VisualEffectResource:
       values: []
       params:
       - nameId: bounds_center
-        index: 22
+        index: 32
       - nameId: bounds_size
-        index: 21
+        index: 31
       processor: {fileID: 0}
       shaderSourceIndex: 0
     - type: 805306368
@@ -1646,9 +1817,9 @@ VisualEffectResource:
       temporaryBuffers: []
       values:
       - nameId: deltaTime_a
-        index: 23
+        index: 19
       - nameId: FrameRate_b
-        index: 12
+        index: 18
       params: []
       processor: {fileID: 0}
       shaderSourceIndex: 1
@@ -1665,7 +1836,7 @@ VisualEffectResource:
       temporaryBuffers: []
       values:
       - nameId: localToWorld
-        index: 0
+        index: 34
       params: []
       processor: {fileID: 0}
       shaderSourceIndex: 3
@@ -1678,13 +1849,23 @@ VisualEffectResource:
       temporaryBuffers: []
       values:
       - nameId: Size_b
-        index: 10
+        index: 13
       - nameId: Color_c
-        index: 9
-      - nameId: uniform_d
-        index: 0
+        index: 8
+      - nameId: LightPosition
+        index: 30
+      - nameId: LightRadius
+        index: 29
+      - nameId: LightIntensity
+        index: 28
+      - nameId: LightColor
+        index: 14
+      - nameId: Directionality
+        index: 15
       - nameId: MainTexture
-        index: 6
+        index: 10
+      - nameId: NormalMap
+        index: 16
       params:
       - nameId: sortPriority
         index: 0
@@ -1770,7 +1951,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 16
+      m_SerializableObject: 12
     m_Space: 2147483647
   m_Property:
     name: Rate
@@ -2174,7 +2355,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614583}
   - {fileID: 8926484042661614686}
   dataType: 0
-  capacity: 32
+  capacity: 64
   stripCapacity: 16
   particlePerStripCount: 16
   m_Space: 0
@@ -2230,7 +2411,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.Vector, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"vector":{"x":-0.3330000042915344,"y":0.800000011920929,"z":-0.3330000042915344}}'
+      m_SerializableObject: '{"vector":{"x":-0.10000000149011612,"y":0.800000011920929,"z":-0.10000000149011612}}'
     m_Space: 0
   m_Property:
     name: A
@@ -2412,7 +2593,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.Vector, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"vector":{"x":0.3330000042915344,"y":1.0,"z":0.3330000042915344}}'
+      m_SerializableObject: '{"vector":{"x":0.10000000149011612,"y":1.0,"z":0.10000000149011612}}'
     m_Space: 0
   m_Property:
     name: B
@@ -2620,7 +2801,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 2
+      m_SerializableObject: 4
     m_Space: 2147483647
   m_Property:
     name: A
@@ -2661,7 +2842,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 3
+      m_SerializableObject: 6
     m_Space: 2147483647
   m_Property:
     name: B
@@ -2713,559 +2894,6 @@ MonoBehaviour:
   angularIntegration: 0
   ageParticles: 1
   reapParticles: 1
---- !u!114 &8926484042661614604
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 486e063e1ed58c843942ea4122829ab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Parent: {fileID: 114350483966674976}
-  m_Children: []
-  m_UIPosition: {x: 392, y: 907}
-  m_UICollapsed: 0
-  m_UISuperCollapsed: 1
-  m_InputSlots: []
-  m_OutputSlots:
-  - {fileID: 8926484042661614605}
-  attribute: position
-  location: 0
-  mask: xyz
---- !u!114 &8926484042661614605
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Parent: {fileID: 0}
-  m_Children:
-  - {fileID: 8926484042661614606}
-  - {fileID: 8926484042661614607}
-  - {fileID: 8926484042661614608}
-  m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
-  m_UISuperCollapsed: 0
-  m_MasterSlot: {fileID: 8926484042661614605}
-  m_MasterData:
-    m_Owner: {fileID: 8926484042661614604}
-    m_Value:
-      m_Type:
-        m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: 
-    m_Space: 2147483647
-  m_Property:
-    name: position
-    m_serializedType:
-      m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-    attributes:
-    - m_Type: 3
-      m_Min: -Infinity
-      m_Max: Infinity
-      m_Tooltip: The current position of the particle.
-      m_Regex: 
-      m_RegexMaxLength: 0
-  m_Direction: 1
-  m_LinkedSlots:
-  - {fileID: 8926484042661614615}
---- !u!114 &8926484042661614606
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Parent: {fileID: 8926484042661614605}
-  m_Children: []
-  m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
-  m_UISuperCollapsed: 0
-  m_MasterSlot: {fileID: 8926484042661614605}
-  m_MasterData:
-    m_Owner: {fileID: 0}
-    m_Value:
-      m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
-    m_Space: 2147483647
-  m_Property:
-    name: x
-    m_serializedType:
-      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-    attributes: []
-  m_Direction: 1
-  m_LinkedSlots: []
---- !u!114 &8926484042661614607
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Parent: {fileID: 8926484042661614605}
-  m_Children: []
-  m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
-  m_UISuperCollapsed: 0
-  m_MasterSlot: {fileID: 8926484042661614605}
-  m_MasterData:
-    m_Owner: {fileID: 0}
-    m_Value:
-      m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
-    m_Space: 2147483647
-  m_Property:
-    name: y
-    m_serializedType:
-      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-    attributes: []
-  m_Direction: 1
-  m_LinkedSlots: []
---- !u!114 &8926484042661614608
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Parent: {fileID: 8926484042661614605}
-  m_Children: []
-  m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
-  m_UISuperCollapsed: 0
-  m_MasterSlot: {fileID: 8926484042661614605}
-  m_MasterData:
-    m_Owner: {fileID: 0}
-    m_Value:
-      m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
-    m_Space: 2147483647
-  m_Property:
-    name: z
-    m_serializedType:
-      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-    attributes: []
-  m_Direction: 1
-  m_LinkedSlots: []
---- !u!114 &8926484042661614614
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6c2320be034cc840b1d0ee902520ad5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Parent: {fileID: 114350483966674976}
-  m_Children: []
-  m_UIPosition: {x: 668, y: 908}
-  m_UICollapsed: 0
-  m_UISuperCollapsed: 1
-  m_InputSlots:
-  - {fileID: 8926484042661614615}
-  m_OutputSlots:
-  - {fileID: 8926484042661614620}
-  m_Type:
-    m_SerializableType: UnityEditor.VFX.Position, Unity.VisualEffectGraph.Editor,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_targetSpace: 1
---- !u!114 &8926484042661614615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5265657162cc1a241bba03a3b0476d99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Parent: {fileID: 0}
-  m_Children:
-  - {fileID: 8926484042661614616}
-  m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
-  m_UISuperCollapsed: 0
-  m_MasterSlot: {fileID: 8926484042661614615}
-  m_MasterData:
-    m_Owner: {fileID: 8926484042661614614}
-    m_Value:
-      m_Type:
-        m_SerializableType: UnityEditor.VFX.Position, Unity.VisualEffectGraph.Editor,
-          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"position":{"x":0.0,"y":0.0,"z":0.0}}'
-    m_Space: 0
-  m_Property:
-    name: x
-    m_serializedType:
-      m_SerializableType: UnityEditor.VFX.Position, Unity.VisualEffectGraph.Editor,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-    attributes:
-    - m_Type: 3
-      m_Min: -Infinity
-      m_Max: Infinity
-      m_Tooltip: 'Sets the spaceable attribute whose space should be changed. This
-        is useful for converting a world space position or direction to local, or
-        vice-versa. '
-      m_Regex: 
-      m_RegexMaxLength: 0
-  m_Direction: 0
-  m_LinkedSlots:
-  - {fileID: 8926484042661614605}
---- !u!114 &8926484042661614616
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Parent: {fileID: 8926484042661614615}
-  m_Children:
-  - {fileID: 8926484042661614617}
-  - {fileID: 8926484042661614618}
-  - {fileID: 8926484042661614619}
-  m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
-  m_UISuperCollapsed: 0
-  m_MasterSlot: {fileID: 8926484042661614615}
-  m_MasterData:
-    m_Owner: {fileID: 0}
-    m_Value:
-      m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
-    m_Space: 2147483647
-  m_Property:
-    name: position
-    m_serializedType:
-      m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-    attributes:
-    - m_Type: 3
-      m_Min: -Infinity
-      m_Max: Infinity
-      m_Tooltip: The position.
-      m_Regex: 
-      m_RegexMaxLength: 0
-  m_Direction: 0
-  m_LinkedSlots: []
---- !u!114 &8926484042661614617
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Parent: {fileID: 8926484042661614616}
-  m_Children: []
-  m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
-  m_UISuperCollapsed: 0
-  m_MasterSlot: {fileID: 8926484042661614615}
-  m_MasterData:
-    m_Owner: {fileID: 0}
-    m_Value:
-      m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
-    m_Space: 2147483647
-  m_Property:
-    name: x
-    m_serializedType:
-      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-    attributes: []
-  m_Direction: 0
-  m_LinkedSlots: []
---- !u!114 &8926484042661614618
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Parent: {fileID: 8926484042661614616}
-  m_Children: []
-  m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
-  m_UISuperCollapsed: 0
-  m_MasterSlot: {fileID: 8926484042661614615}
-  m_MasterData:
-    m_Owner: {fileID: 0}
-    m_Value:
-      m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
-    m_Space: 2147483647
-  m_Property:
-    name: y
-    m_serializedType:
-      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-    attributes: []
-  m_Direction: 0
-  m_LinkedSlots: []
---- !u!114 &8926484042661614619
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Parent: {fileID: 8926484042661614616}
-  m_Children: []
-  m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
-  m_UISuperCollapsed: 0
-  m_MasterSlot: {fileID: 8926484042661614615}
-  m_MasterData:
-    m_Owner: {fileID: 0}
-    m_Value:
-      m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
-    m_Space: 2147483647
-  m_Property:
-    name: z
-    m_serializedType:
-      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-    attributes: []
-  m_Direction: 0
-  m_LinkedSlots: []
---- !u!114 &8926484042661614620
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5265657162cc1a241bba03a3b0476d99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Parent: {fileID: 0}
-  m_Children:
-  - {fileID: 8926484042661614621}
-  m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
-  m_UISuperCollapsed: 0
-  m_MasterSlot: {fileID: 8926484042661614620}
-  m_MasterData:
-    m_Owner: {fileID: 8926484042661614614}
-    m_Value:
-      m_Type:
-        m_SerializableType: UnityEditor.VFX.Position, Unity.VisualEffectGraph.Editor,
-          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: 
-    m_Space: 1
-  m_Property:
-    name: 
-    m_serializedType:
-      m_SerializableType: UnityEditor.VFX.Position, Unity.VisualEffectGraph.Editor,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-    attributes: []
-  m_Direction: 1
-  m_LinkedSlots:
-  - {fileID: 8926484042661614696}
---- !u!114 &8926484042661614621
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Parent: {fileID: 8926484042661614620}
-  m_Children:
-  - {fileID: 8926484042661614622}
-  - {fileID: 8926484042661614623}
-  - {fileID: 8926484042661614624}
-  m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
-  m_UISuperCollapsed: 0
-  m_MasterSlot: {fileID: 8926484042661614620}
-  m_MasterData:
-    m_Owner: {fileID: 0}
-    m_Value:
-      m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
-    m_Space: 2147483647
-  m_Property:
-    name: position
-    m_serializedType:
-      m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-    attributes:
-    - m_Type: 3
-      m_Min: -Infinity
-      m_Max: Infinity
-      m_Tooltip: The position.
-      m_Regex: 
-      m_RegexMaxLength: 0
-  m_Direction: 1
-  m_LinkedSlots: []
---- !u!114 &8926484042661614622
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Parent: {fileID: 8926484042661614621}
-  m_Children: []
-  m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
-  m_UISuperCollapsed: 0
-  m_MasterSlot: {fileID: 8926484042661614620}
-  m_MasterData:
-    m_Owner: {fileID: 0}
-    m_Value:
-      m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
-    m_Space: 2147483647
-  m_Property:
-    name: x
-    m_serializedType:
-      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-    attributes: []
-  m_Direction: 1
-  m_LinkedSlots: []
---- !u!114 &8926484042661614623
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Parent: {fileID: 8926484042661614621}
-  m_Children: []
-  m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
-  m_UISuperCollapsed: 0
-  m_MasterSlot: {fileID: 8926484042661614620}
-  m_MasterData:
-    m_Owner: {fileID: 0}
-    m_Value:
-      m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
-    m_Space: 2147483647
-  m_Property:
-    name: y
-    m_serializedType:
-      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-    attributes: []
-  m_Direction: 1
-  m_LinkedSlots: []
---- !u!114 &8926484042661614624
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Parent: {fileID: 8926484042661614621}
-  m_Children: []
-  m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
-  m_UISuperCollapsed: 0
-  m_MasterSlot: {fileID: 8926484042661614620}
-  m_MasterData:
-    m_Owner: {fileID: 0}
-    m_Value:
-      m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
-    m_Space: 2147483647
-  m_Property:
-    name: z
-    m_serializedType:
-      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-    attributes: []
-  m_Direction: 1
-  m_LinkedSlots: []
 --- !u!114 &8926484042661614673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3280,7 +2908,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Parent: {fileID: 114350483966674976}
   m_Children: []
-  m_UIPosition: {x: 653, y: 1289}
+  m_UIPosition: {x: 666, y: 1268}
   m_UICollapsed: 0
   m_UISuperCollapsed: 1
   m_InputSlots: []
@@ -3473,7 +3101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Parent: {fileID: 114350483966674976}
   m_Children: []
-  m_UIPosition: {x: 632, y: 1339}
+  m_UIPosition: {x: 644, y: 1300}
   m_UICollapsed: 0
   m_UISuperCollapsed: 1
   m_InputSlots: []
@@ -3677,14 +3305,18 @@ MonoBehaviour:
   m_UISuperCollapsed: 0
   m_InputSlots:
   - {fileID: 8926484042661614695}
-  - {fileID: 8926484042661614696}
-  - {fileID: 8926484042661614700}
   - {fileID: 8926484042661614701}
+  - {fileID: 8926484042661614727}
   - {fileID: 8926484042661614702}
   - {fileID: 8926484042661614703}
+  - {fileID: 8926484042661614712}
   - {fileID: 8926484042661614706}
   - {fileID: 8926484042661614711}
-  - {fileID: 8926484042661614712}
+  - {fileID: 8926484042661614728}
+  - {fileID: 8926484042661614732}
+  - {fileID: 8926484042661614733}
+  - {fileID: 8926484042661614734}
+  - {fileID: 8926484042661614758}
   - {fileID: 8926484042661614688}
   m_OutputSlots: []
   m_Label: 
@@ -3710,9 +3342,9 @@ MonoBehaviour:
   indirectDraw: 0
   castShadows: 0
   useExposureWeight: 0
-  shaderGraph: {fileID: -5475051401550479605, guid: 4e2520bf956c0c14d98648a49ca22bf3,
+  shaderGraph: {fileID: -5475051401550479605, guid: f9a154a7d8c03bb4fabd47afca2e760f,
     type: 3}
-  shadergraphGUID: 4e2520bf956c0c14d98648a49ca22bf3
+  shadergraphGUID: f9a154a7d8c03bb4fabd47afca2e760f
   primitiveType: 2
   useGeometryShader: 0
 --- !u!114 &8926484042661614688
@@ -3899,7 +3531,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Gradient, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"colorKeys":[{"color":{"r":1.0,"g":1.0,"b":1.0,"a":1.0},"time":0.0},{"color":{"r":1.0,"g":1.0,"b":1.0,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":0.0,"time":0.0},{"alpha":1.0,"time":0.10000763088464737},{"alpha":1.0,"time":0.800000011920929},{"alpha":0.0,"time":1.0}],"gradientMode":0}'
+      m_SerializableObject: '{"colorKeys":[{"color":{"r":0.6037735939025879,"g":0.6037735939025879,"b":0.6037735939025879,"a":1.0},"time":0.0},{"color":{"r":0.6037735939025879,"g":0.6037735939025879,"b":0.6037735939025879,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":0.0,"time":0.0},{"alpha":1.0,"time":0.10000763088464737},{"alpha":1.0,"time":0.800000011920929},{"alpha":0.0,"time":1.0}],"gradientMode":0}'
     m_Space: 2147483647
   m_Property:
     name: Color
@@ -3951,183 +3583,6 @@ MonoBehaviour:
       m_Min: -Infinity
       m_Max: Infinity
       m_Tooltip: Alpha threshold used for pixel clipping
-      m_Regex: 
-      m_RegexMaxLength: 0
-  m_Direction: 0
-  m_LinkedSlots: []
---- !u!114 &8926484042661614696
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Parent: {fileID: 0}
-  m_Children:
-  - {fileID: 8926484042661614697}
-  - {fileID: 8926484042661614698}
-  - {fileID: 8926484042661614699}
-  m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
-  m_UISuperCollapsed: 0
-  m_MasterSlot: {fileID: 8926484042661614696}
-  m_MasterData:
-    m_Owner: {fileID: 8926484042661614686}
-    m_Value:
-      m_Type:
-        m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"x":0.0,"y":0.0,"z":0.0}'
-    m_Space: 2147483647
-  m_Property:
-    name: GISamplePosition
-    m_serializedType:
-      m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-    attributes: []
-  m_Direction: 0
-  m_LinkedSlots:
-  - {fileID: 8926484042661614620}
---- !u!114 &8926484042661614697
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Parent: {fileID: 8926484042661614696}
-  m_Children: []
-  m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
-  m_UISuperCollapsed: 0
-  m_MasterSlot: {fileID: 8926484042661614696}
-  m_MasterData:
-    m_Owner: {fileID: 0}
-    m_Value:
-      m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
-    m_Space: 2147483647
-  m_Property:
-    name: x
-    m_serializedType:
-      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-    attributes: []
-  m_Direction: 0
-  m_LinkedSlots: []
---- !u!114 &8926484042661614698
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Parent: {fileID: 8926484042661614696}
-  m_Children: []
-  m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
-  m_UISuperCollapsed: 0
-  m_MasterSlot: {fileID: 8926484042661614696}
-  m_MasterData:
-    m_Owner: {fileID: 0}
-    m_Value:
-      m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
-    m_Space: 2147483647
-  m_Property:
-    name: y
-    m_serializedType:
-      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-    attributes: []
-  m_Direction: 0
-  m_LinkedSlots: []
---- !u!114 &8926484042661614699
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Parent: {fileID: 8926484042661614696}
-  m_Children: []
-  m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
-  m_UISuperCollapsed: 0
-  m_MasterSlot: {fileID: 8926484042661614696}
-  m_MasterData:
-    m_Owner: {fileID: 0}
-    m_Value:
-      m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
-    m_Space: 2147483647
-  m_Property:
-    name: z
-    m_serializedType:
-      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-    attributes: []
-  m_Direction: 0
-  m_LinkedSlots: []
---- !u!114 &8926484042661614700
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Parent: {fileID: 0}
-  m_Children: []
-  m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
-  m_UISuperCollapsed: 0
-  m_MasterSlot: {fileID: 8926484042661614700}
-  m_MasterData:
-    m_Owner: {fileID: 8926484042661614686}
-    m_Value:
-      m_Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 0.8451613
-    m_Space: 2147483647
-  m_Property:
-    name: BentNormal
-    m_serializedType:
-      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-    attributes:
-    - m_Type: 0
-      m_Min: 0
-      m_Max: 1
-      m_Tooltip: 
       m_Regex: 
       m_RegexMaxLength: 0
   m_Direction: 0
@@ -4741,3 +4196,1047 @@ MonoBehaviour:
     attributes: []
   m_Direction: 0
   m_LinkedSlots: []
+--- !u!114 &8926484042661614727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70a331b1d86cc8d4aa106ccbe0da5852, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 0}
+  m_Children: []
+  m_UIPosition: {x: 0, y: 0}
+  m_UICollapsed: 1
+  m_UISuperCollapsed: 0
+  m_MasterSlot: {fileID: 8926484042661614727}
+  m_MasterData:
+    m_Owner: {fileID: 8926484042661614686}
+    m_Value:
+      m_Type:
+        m_SerializableType: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      m_SerializableObject: '{"obj":{"fileID":2800000,"guid":"94b4eb19099365a41ac1ee284d537678","type":3}}'
+    m_Space: 2147483647
+  m_Property:
+    name: NormalMap
+    m_serializedType:
+      m_SerializableType: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    attributes: []
+  m_Direction: 0
+  m_LinkedSlots: []
+--- !u!114 &8926484042661614728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 0}
+  m_Children:
+  - {fileID: 8926484042661614729}
+  - {fileID: 8926484042661614730}
+  - {fileID: 8926484042661614731}
+  m_UIPosition: {x: 0, y: 0}
+  m_UICollapsed: 1
+  m_UISuperCollapsed: 0
+  m_MasterSlot: {fileID: 8926484042661614728}
+  m_MasterData:
+    m_Owner: {fileID: 8926484042661614686}
+    m_Value:
+      m_Type:
+        m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      m_SerializableObject: '{"x":2.0,"y":0.0,"z":0.0}'
+    m_Space: 2147483647
+  m_Property:
+    name: LightPosition
+    m_serializedType:
+      m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    attributes: []
+  m_Direction: 0
+  m_LinkedSlots:
+  - {fileID: 8926484042661614739}
+--- !u!114 &8926484042661614729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 8926484042661614728}
+  m_Children: []
+  m_UIPosition: {x: 0, y: 0}
+  m_UICollapsed: 1
+  m_UISuperCollapsed: 0
+  m_MasterSlot: {fileID: 8926484042661614728}
+  m_MasterData:
+    m_Owner: {fileID: 0}
+    m_Value:
+      m_Type:
+        m_SerializableType: 
+      m_SerializableObject: 
+    m_Space: 2147483647
+  m_Property:
+    name: x
+    m_serializedType:
+      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+    attributes: []
+  m_Direction: 0
+  m_LinkedSlots: []
+--- !u!114 &8926484042661614730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 8926484042661614728}
+  m_Children: []
+  m_UIPosition: {x: 0, y: 0}
+  m_UICollapsed: 1
+  m_UISuperCollapsed: 0
+  m_MasterSlot: {fileID: 8926484042661614728}
+  m_MasterData:
+    m_Owner: {fileID: 0}
+    m_Value:
+      m_Type:
+        m_SerializableType: 
+      m_SerializableObject: 
+    m_Space: 2147483647
+  m_Property:
+    name: y
+    m_serializedType:
+      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+    attributes: []
+  m_Direction: 0
+  m_LinkedSlots: []
+--- !u!114 &8926484042661614731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 8926484042661614728}
+  m_Children: []
+  m_UIPosition: {x: 0, y: 0}
+  m_UICollapsed: 1
+  m_UISuperCollapsed: 0
+  m_MasterSlot: {fileID: 8926484042661614728}
+  m_MasterData:
+    m_Owner: {fileID: 0}
+    m_Value:
+      m_Type:
+        m_SerializableType: 
+      m_SerializableObject: 
+    m_Space: 2147483647
+  m_Property:
+    name: z
+    m_serializedType:
+      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+    attributes: []
+  m_Direction: 0
+  m_LinkedSlots: []
+--- !u!114 &8926484042661614732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 0}
+  m_Children: []
+  m_UIPosition: {x: 0, y: 0}
+  m_UICollapsed: 1
+  m_UISuperCollapsed: 0
+  m_MasterSlot: {fileID: 8926484042661614732}
+  m_MasterData:
+    m_Owner: {fileID: 8926484042661614686}
+    m_Value:
+      m_Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      m_SerializableObject: 3
+    m_Space: 2147483647
+  m_Property:
+    name: LightRadius
+    m_serializedType:
+      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+    attributes: []
+  m_Direction: 0
+  m_LinkedSlots:
+  - {fileID: 8926484042661614744}
+--- !u!114 &8926484042661614733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 0}
+  m_Children: []
+  m_UIPosition: {x: 0, y: 0}
+  m_UICollapsed: 1
+  m_UISuperCollapsed: 0
+  m_MasterSlot: {fileID: 8926484042661614733}
+  m_MasterData:
+    m_Owner: {fileID: 8926484042661614686}
+    m_Value:
+      m_Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      m_SerializableObject: 0
+    m_Space: 2147483647
+  m_Property:
+    name: LightIntensity
+    m_serializedType:
+      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+    attributes: []
+  m_Direction: 0
+  m_LinkedSlots:
+  - {fileID: 8926484042661614746}
+--- !u!114 &8926484042661614734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 0}
+  m_Children:
+  - {fileID: 8926484042661614735}
+  - {fileID: 8926484042661614736}
+  - {fileID: 8926484042661614737}
+  m_UIPosition: {x: 0, y: 0}
+  m_UICollapsed: 1
+  m_UISuperCollapsed: 0
+  m_MasterSlot: {fileID: 8926484042661614734}
+  m_MasterData:
+    m_Owner: {fileID: 8926484042661614686}
+    m_Value:
+      m_Type:
+        m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      m_SerializableObject: '{"x":0.0,"y":0.0,"z":0.0}'
+    m_Space: 2147483647
+  m_Property:
+    name: LightColor
+    m_serializedType:
+      m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    attributes: []
+  m_Direction: 0
+  m_LinkedSlots:
+  - {fileID: 8926484042661614753}
+--- !u!114 &8926484042661614735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 8926484042661614734}
+  m_Children: []
+  m_UIPosition: {x: 0, y: 0}
+  m_UICollapsed: 1
+  m_UISuperCollapsed: 0
+  m_MasterSlot: {fileID: 8926484042661614734}
+  m_MasterData:
+    m_Owner: {fileID: 0}
+    m_Value:
+      m_Type:
+        m_SerializableType: 
+      m_SerializableObject: 
+    m_Space: 2147483647
+  m_Property:
+    name: x
+    m_serializedType:
+      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+    attributes: []
+  m_Direction: 0
+  m_LinkedSlots: []
+--- !u!114 &8926484042661614736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 8926484042661614734}
+  m_Children: []
+  m_UIPosition: {x: 0, y: 0}
+  m_UICollapsed: 1
+  m_UISuperCollapsed: 0
+  m_MasterSlot: {fileID: 8926484042661614734}
+  m_MasterData:
+    m_Owner: {fileID: 0}
+    m_Value:
+      m_Type:
+        m_SerializableType: 
+      m_SerializableObject: 
+    m_Space: 2147483647
+  m_Property:
+    name: y
+    m_serializedType:
+      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+    attributes: []
+  m_Direction: 0
+  m_LinkedSlots: []
+--- !u!114 &8926484042661614737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 8926484042661614734}
+  m_Children: []
+  m_UIPosition: {x: 0, y: 0}
+  m_UICollapsed: 1
+  m_UISuperCollapsed: 0
+  m_MasterSlot: {fileID: 8926484042661614734}
+  m_MasterData:
+    m_Owner: {fileID: 0}
+    m_Value:
+      m_Type:
+        m_SerializableType: 
+      m_SerializableObject: 
+    m_Space: 2147483647
+  m_Property:
+    name: z
+    m_serializedType:
+      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+    attributes: []
+  m_Direction: 0
+  m_LinkedSlots: []
+--- !u!114 &8926484042661614738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 330e0fca1717dde4aaa144f48232aa64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 114350483966674976}
+  m_Children: []
+  m_UIPosition: {x: 0, y: 0}
+  m_UICollapsed: 1
+  m_UISuperCollapsed: 0
+  m_InputSlots: []
+  m_OutputSlots:
+  - {fileID: 8926484042661614739}
+  m_ExposedName: LightPosition
+  m_Exposed: 1
+  m_Order: 0
+  m_Category: 
+  m_Min:
+    m_Type:
+      m_SerializableType: 
+    m_SerializableObject: 
+  m_Max:
+    m_Type:
+      m_SerializableType: 
+    m_SerializableObject: 
+  m_IsOutput: 0
+  m_Tooltip: 
+  m_Nodes:
+  - m_Id: 0
+    linkedSlots:
+    - outputSlot: {fileID: 8926484042661614739}
+      inputSlot: {fileID: 8926484042661614728}
+    position: {x: 745, y: 1325}
+    expandedSlots: []
+    expanded: 0
+--- !u!114 &8926484042661614739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 0}
+  m_Children:
+  - {fileID: 8926484042661614740}
+  - {fileID: 8926484042661614741}
+  - {fileID: 8926484042661614742}
+  m_UIPosition: {x: 0, y: 0}
+  m_UICollapsed: 1
+  m_UISuperCollapsed: 0
+  m_MasterSlot: {fileID: 8926484042661614739}
+  m_MasterData:
+    m_Owner: {fileID: 8926484042661614738}
+    m_Value:
+      m_Type:
+        m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      m_SerializableObject: '{"x":2.0,"y":0.0,"z":0.0}'
+    m_Space: 2147483647
+  m_Property:
+    name: o
+    m_serializedType:
+      m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    attributes: []
+  m_Direction: 1
+  m_LinkedSlots:
+  - {fileID: 8926484042661614728}
+--- !u!114 &8926484042661614740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 8926484042661614739}
+  m_Children: []
+  m_UIPosition: {x: 0, y: 0}
+  m_UICollapsed: 1
+  m_UISuperCollapsed: 0
+  m_MasterSlot: {fileID: 8926484042661614739}
+  m_MasterData:
+    m_Owner: {fileID: 0}
+    m_Value:
+      m_Type:
+        m_SerializableType: 
+      m_SerializableObject: 
+    m_Space: 2147483647
+  m_Property:
+    name: x
+    m_serializedType:
+      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+    attributes: []
+  m_Direction: 1
+  m_LinkedSlots: []
+--- !u!114 &8926484042661614741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 8926484042661614739}
+  m_Children: []
+  m_UIPosition: {x: 0, y: 0}
+  m_UICollapsed: 1
+  m_UISuperCollapsed: 0
+  m_MasterSlot: {fileID: 8926484042661614739}
+  m_MasterData:
+    m_Owner: {fileID: 0}
+    m_Value:
+      m_Type:
+        m_SerializableType: 
+      m_SerializableObject: 
+    m_Space: 2147483647
+  m_Property:
+    name: y
+    m_serializedType:
+      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+    attributes: []
+  m_Direction: 1
+  m_LinkedSlots: []
+--- !u!114 &8926484042661614742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 8926484042661614739}
+  m_Children: []
+  m_UIPosition: {x: 0, y: 0}
+  m_UICollapsed: 1
+  m_UISuperCollapsed: 0
+  m_MasterSlot: {fileID: 8926484042661614739}
+  m_MasterData:
+    m_Owner: {fileID: 0}
+    m_Value:
+      m_Type:
+        m_SerializableType: 
+      m_SerializableObject: 
+    m_Space: 2147483647
+  m_Property:
+    name: z
+    m_serializedType:
+      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+    attributes: []
+  m_Direction: 1
+  m_LinkedSlots: []
+--- !u!114 &8926484042661614743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 330e0fca1717dde4aaa144f48232aa64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 114350483966674976}
+  m_Children: []
+  m_UIPosition: {x: 0, y: 0}
+  m_UICollapsed: 1
+  m_UISuperCollapsed: 0
+  m_InputSlots: []
+  m_OutputSlots:
+  - {fileID: 8926484042661614744}
+  m_ExposedName: LightRadius
+  m_Exposed: 1
+  m_Order: 1
+  m_Category: 
+  m_Min:
+    m_Type:
+      m_SerializableType: 
+    m_SerializableObject: 
+  m_Max:
+    m_Type:
+      m_SerializableType: 
+    m_SerializableObject: 
+  m_IsOutput: 0
+  m_Tooltip: 
+  m_Nodes:
+  - m_Id: 0
+    linkedSlots:
+    - outputSlot: {fileID: 8926484042661614744}
+      inputSlot: {fileID: 8926484042661614732}
+    position: {x: 749, y: 1360}
+    expandedSlots: []
+    expanded: 0
+--- !u!114 &8926484042661614744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 0}
+  m_Children: []
+  m_UIPosition: {x: 0, y: 0}
+  m_UICollapsed: 1
+  m_UISuperCollapsed: 0
+  m_MasterSlot: {fileID: 8926484042661614744}
+  m_MasterData:
+    m_Owner: {fileID: 8926484042661614743}
+    m_Value:
+      m_Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      m_SerializableObject: 3
+    m_Space: 2147483647
+  m_Property:
+    name: o
+    m_serializedType:
+      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+    attributes: []
+  m_Direction: 1
+  m_LinkedSlots:
+  - {fileID: 8926484042661614732}
+--- !u!114 &8926484042661614745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 330e0fca1717dde4aaa144f48232aa64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 114350483966674976}
+  m_Children: []
+  m_UIPosition: {x: 0, y: 0}
+  m_UICollapsed: 1
+  m_UISuperCollapsed: 0
+  m_InputSlots: []
+  m_OutputSlots:
+  - {fileID: 8926484042661614746}
+  m_ExposedName: LightIntensity
+  m_Exposed: 1
+  m_Order: 2
+  m_Category: 
+  m_Min:
+    m_Type:
+      m_SerializableType: 
+    m_SerializableObject: 
+  m_Max:
+    m_Type:
+      m_SerializableType: 
+    m_SerializableObject: 
+  m_IsOutput: 0
+  m_Tooltip: 
+  m_Nodes:
+  - m_Id: 0
+    linkedSlots:
+    - outputSlot: {fileID: 8926484042661614746}
+      inputSlot: {fileID: 8926484042661614733}
+    position: {x: 729, y: 1401}
+    expandedSlots: []
+    expanded: 0
+--- !u!114 &8926484042661614746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 0}
+  m_Children: []
+  m_UIPosition: {x: 0, y: 0}
+  m_UICollapsed: 1
+  m_UISuperCollapsed: 0
+  m_MasterSlot: {fileID: 8926484042661614746}
+  m_MasterData:
+    m_Owner: {fileID: 8926484042661614745}
+    m_Value:
+      m_Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      m_SerializableObject: 0
+    m_Space: 2147483647
+  m_Property:
+    name: o
+    m_serializedType:
+      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+    attributes: []
+  m_Direction: 1
+  m_LinkedSlots:
+  - {fileID: 8926484042661614733}
+--- !u!114 &8926484042661614752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 330e0fca1717dde4aaa144f48232aa64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 114350483966674976}
+  m_Children: []
+  m_UIPosition: {x: 0, y: 0}
+  m_UICollapsed: 0
+  m_UISuperCollapsed: 0
+  m_InputSlots: []
+  m_OutputSlots:
+  - {fileID: 8926484042661614753}
+  m_ExposedName: LightColor
+  m_Exposed: 1
+  m_Order: 3
+  m_Category: 
+  m_Min:
+    m_Type:
+      m_SerializableType: 
+    m_SerializableObject: 
+  m_Max:
+    m_Type:
+      m_SerializableType: 
+    m_SerializableObject: 
+  m_IsOutput: 0
+  m_Tooltip: 
+  m_Nodes:
+  - m_Id: 0
+    linkedSlots:
+    - outputSlot: {fileID: 8926484042661614753}
+      inputSlot: {fileID: 8926484042661614734}
+    position: {x: 744, y: 1439}
+    expandedSlots: []
+    expanded: 0
+--- !u!114 &8926484042661614753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c82227d5759e296488798b1554a72a15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 0}
+  m_Children:
+  - {fileID: 8926484042661614754}
+  - {fileID: 8926484042661614755}
+  - {fileID: 8926484042661614756}
+  - {fileID: 8926484042661614757}
+  m_UIPosition: {x: 0, y: 0}
+  m_UICollapsed: 1
+  m_UISuperCollapsed: 0
+  m_MasterSlot: {fileID: 8926484042661614753}
+  m_MasterData:
+    m_Owner: {fileID: 8926484042661614752}
+    m_Value:
+      m_Type:
+        m_SerializableType: UnityEngine.Color, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      m_SerializableObject: 
+    m_Space: 2147483647
+  m_Property:
+    name: o
+    m_serializedType:
+      m_SerializableType: UnityEngine.Color, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    attributes: []
+  m_Direction: 1
+  m_LinkedSlots:
+  - {fileID: 8926484042661614734}
+--- !u!114 &8926484042661614754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 8926484042661614753}
+  m_Children: []
+  m_UIPosition: {x: 0, y: 0}
+  m_UICollapsed: 1
+  m_UISuperCollapsed: 0
+  m_MasterSlot: {fileID: 8926484042661614753}
+  m_MasterData:
+    m_Owner: {fileID: 0}
+    m_Value:
+      m_Type:
+        m_SerializableType: 
+      m_SerializableObject: 
+    m_Space: 2147483647
+  m_Property:
+    name: r
+    m_serializedType:
+      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+    attributes: []
+  m_Direction: 1
+  m_LinkedSlots: []
+--- !u!114 &8926484042661614755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 8926484042661614753}
+  m_Children: []
+  m_UIPosition: {x: 0, y: 0}
+  m_UICollapsed: 1
+  m_UISuperCollapsed: 0
+  m_MasterSlot: {fileID: 8926484042661614753}
+  m_MasterData:
+    m_Owner: {fileID: 0}
+    m_Value:
+      m_Type:
+        m_SerializableType: 
+      m_SerializableObject: 
+    m_Space: 2147483647
+  m_Property:
+    name: g
+    m_serializedType:
+      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+    attributes: []
+  m_Direction: 1
+  m_LinkedSlots: []
+--- !u!114 &8926484042661614756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 8926484042661614753}
+  m_Children: []
+  m_UIPosition: {x: 0, y: 0}
+  m_UICollapsed: 1
+  m_UISuperCollapsed: 0
+  m_MasterSlot: {fileID: 8926484042661614753}
+  m_MasterData:
+    m_Owner: {fileID: 0}
+    m_Value:
+      m_Type:
+        m_SerializableType: 
+      m_SerializableObject: 
+    m_Space: 2147483647
+  m_Property:
+    name: b
+    m_serializedType:
+      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+    attributes: []
+  m_Direction: 1
+  m_LinkedSlots: []
+--- !u!114 &8926484042661614757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 8926484042661614753}
+  m_Children: []
+  m_UIPosition: {x: 0, y: 0}
+  m_UICollapsed: 1
+  m_UISuperCollapsed: 0
+  m_MasterSlot: {fileID: 8926484042661614753}
+  m_MasterData:
+    m_Owner: {fileID: 0}
+    m_Value:
+      m_Type:
+        m_SerializableType: 
+      m_SerializableObject: 
+    m_Space: 2147483647
+  m_Property:
+    name: a
+    m_serializedType:
+      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+    attributes: []
+  m_Direction: 1
+  m_LinkedSlots: []
+--- !u!114 &8926484042661614758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 0}
+  m_Children: []
+  m_UIPosition: {x: 0, y: 0}
+  m_UICollapsed: 1
+  m_UISuperCollapsed: 0
+  m_MasterSlot: {fileID: 8926484042661614758}
+  m_MasterData:
+    m_Owner: {fileID: 8926484042661614686}
+    m_Value:
+      m_Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      m_SerializableObject: 0.5
+    m_Space: 2147483647
+  m_Property:
+    name: Directionality
+    m_serializedType:
+      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+    attributes:
+    - m_Type: 0
+      m_Min: 0
+      m_Max: 1
+      m_Tooltip: 
+      m_Regex: 
+      m_RegexMaxLength: 0
+  m_Direction: 0
+  m_LinkedSlots:
+  - {fileID: 8926484042661614760}
+--- !u!114 &8926484042661614759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 330e0fca1717dde4aaa144f48232aa64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 114350483966674976}
+  m_Children: []
+  m_UIPosition: {x: 0, y: 0}
+  m_UICollapsed: 0
+  m_UISuperCollapsed: 0
+  m_InputSlots: []
+  m_OutputSlots:
+  - {fileID: 8926484042661614760}
+  m_ExposedName: Directionality
+  m_Exposed: 1
+  m_Order: 4
+  m_Category: 
+  m_Min:
+    m_Type:
+      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+    m_SerializableObject: 
+  m_Max:
+    m_Type:
+      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+    m_SerializableObject: 1
+  m_IsOutput: 0
+  m_Tooltip: 
+  m_Nodes:
+  - m_Id: 0
+    linkedSlots:
+    - outputSlot: {fileID: 8926484042661614760}
+      inputSlot: {fileID: 8926484042661614758}
+    position: {x: 724, y: 1478}
+    expandedSlots: []
+    expanded: 0
+--- !u!114 &8926484042661614760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 0}
+  m_Children: []
+  m_UIPosition: {x: 0, y: 0}
+  m_UICollapsed: 1
+  m_UISuperCollapsed: 0
+  m_MasterSlot: {fileID: 8926484042661614760}
+  m_MasterData:
+    m_Owner: {fileID: 8926484042661614759}
+    m_Value:
+      m_Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      m_SerializableObject: 0.5
+    m_Space: 2147483647
+  m_Property:
+    name: o
+    m_serializedType:
+      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+    attributes: []
+  m_Direction: 1
+  m_LinkedSlots:
+  - {fileID: 8926484042661614758}
