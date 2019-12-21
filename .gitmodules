@@ -1,0 +1,3 @@
+[submodule "Packages/net.peeweek.vfxgraph-extras"]
+	path = Packages/net.peeweek.vfxgraph-extras
+	url = git@github.com:peeweek/net.peeweek.vfxgraph-extras.git
